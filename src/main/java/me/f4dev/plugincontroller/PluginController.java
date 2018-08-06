@@ -45,9 +45,9 @@ public final class PluginController extends JavaPlugin {
             "languages", this.getConfig().getString("language") + ".yml"));
   }
   
-  public static String colorify(String s) {
+  public static String colorify(String string) {
     if(s != null) {
-      return ChatColor.translateAlternateColorCodes('&', s);
+      return ChatColor.translateAlternateColorCodes('&', string);
     }
     
     return null;
