@@ -3,3 +3,21 @@ version: ${project.version}
 main: me.f4dev.plugincontroller.PluginController
 prefix: PluginController
 authors: [f4dev]
+commands:
+  plugincontroller:
+    description: Main command
+    aliases: [pc, plc]
+    permissions: plugincontroller.help
+permissions:
+  plugincontroller.*:
+    description: Full access to plugin
+    default: op
+    children:
+      plugincontroller.help: true
+      plugincontroller.enable: true
+  plugincontroller.help:
+    description: Access to help subcommand
+    default: op
+  plugincontroller.enable:
+    description: Allows you to enable plugins
+    default: op
