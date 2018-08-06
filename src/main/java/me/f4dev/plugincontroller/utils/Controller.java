@@ -5,6 +5,7 @@
 
 package me.f4dev.plugincontroller.utils;
 
+import me.f4dev.plugincontroller.PluginController;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -29,8 +30,14 @@ public class Controller {
 //    }
 //  }
   
-  public static void enablePlugin(final Plugin plugin) {
-    Bukkit.getPluginManager().enablePlugin(plugin);
+  PluginController plugin;
+  
+  public Controller(PluginController plugin) {
+    this.plugin = plugin;
+  }
+  
+  public void enablePlugin(final Plugin pluginInstance) {
+    Bukkit.getPluginManager().enablePlugin(pluginInstance);
     
   }
 }
