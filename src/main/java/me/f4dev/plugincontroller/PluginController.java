@@ -18,8 +18,14 @@
  * See file LICENSE for full license details.
  */
 
+/*
+ * This file is part of PluginController project by F4 Developer which is released under GNU General Public License v3.0.
+ * See file LICENSE for full license details.
+ */
+
 package me.f4dev.plugincontroller;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -57,5 +63,13 @@ public final class PluginController extends JavaPlugin {
     
     language = YamlConfiguration.loadConfiguration(new File(getDataFolder() + File.separator +
             "languages", this.getConfig().getString("Language") + ".yml"));
+  }
+  
+  public static String colorify(String s) {
+    if(s != null) {
+      return ChatColor.translateAlternateColorCodes('&', s);
+    }
+    
+    return null;
   }
 }
