@@ -46,7 +46,7 @@ public final class PluginController extends JavaPlugin {
   }
   
   public static String colorify(String string) {
-    if(s != null) {
+    if(string != null) {
       return ChatColor.translateAlternateColorCodes('&', string);
     }
     
