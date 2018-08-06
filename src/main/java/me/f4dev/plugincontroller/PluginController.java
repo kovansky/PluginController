@@ -42,7 +42,7 @@ public final class PluginController extends JavaPlugin {
     }
     
     language = YamlConfiguration.loadConfiguration(new File(getDataFolder() + File.separator +
-            "languages", this.getConfig().getString("Language") + ".yml"));
+            "languages", this.getConfig().getString("language") + ".yml"));
   }
   
   public static String colorify(String s) {
