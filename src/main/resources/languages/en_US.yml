@@ -1,0 +1,56 @@
+# %2$s is command string, %1$s is what command was sent. /%1$s %2$s - /plm command
+# %s is string input
+# Do not remove these, otherwise messages will not be displayed correctly.
+command:
+  description:
+    enable: "enable <plugin> &b- Enables a plugin"
+    disable: "disable <plugin> &b- Disables a plugin"
+    load: "load <plugin> &b- Loads a plugin(Must use a file name, no .jar needed)"
+    unload: "unload <plugin> &b- Unloads a plugin"
+    reload: "reload <plugin> &b- Unloads and loads a plugin"
+    sreload: "sreload <plugin> &b- Disables and enables a plugin"
+    show: "show <plugin> &b- Shows detailed information about a plugin"
+    list: "list [options] &b- Lists plugins with specified options"
+    listOptions: "&eList options\n&e-v &6- Shows plugins with versions\n&e-o &6- Lists options\n&e-a &6- Lists plugins in alphabetical order\n&e-s:name &6- Lists plugins containing the given name"
+    configReload: "configreload <plugin> &b- Reloads a plugin's config file."
+response:
+  error:
+    noCommand: "&cCommand %2$s not found. Try /%1$s for help!"
+    noPermission: "&cYou don't have permission to do that!"
+    noPlugin: "&cNo such plugin: %s"
+    alreadyEnabled: "&c%s is already enabled!"
+    alreadyDisabled: "&c%s is already disabled!"
+    noSuchFile: "&cNo such file: %s"
+    noDescriptionFile: "&cJar file doesn't contain a plugin.yml file: %s"
+    alreadyLoaded: "&c%s is already loaded!"
+    pluginNotLoaded: "&cFailed to load %s! (Check console for details.)"
+    failedOnLoad: "Failed to call 'onLoad()' for plugin '%s'"
+    unloadError: "&cAn error occurred while unloading %s!"
+    unloadFailed: "&cFailed to unload %s! (Check console for details.)"
+    noJar: "&c%s's jar file is missing!"
+  action:
+    updateAvailable: "There is a new %1$s build %2$s.%3$s.%4$s available for PluginManagerReloaded"
+    pluginEnabled: "&a%s enabled!"
+    pluginDisabled: "&a%s disabled!"
+    pluginLoaded: "&a%1$s %2$s loaded!"
+    pluginUnloaded: "&a%1$s %2$s unloaded successfully."
+    pluginReloaded: "&a%s reloaded successfully."
+    pluginSreloaded: "&a%1$s %2$s soft-reloaded successfully."
+    list:
+      enabled: "&aEnabled plugins: %s"
+      disabled: "&aDisabled plugins: &c%s"
+    configReload: "&a%s's config reloaded successfully."
+  show:
+    name: "&bPlugin information: &a%s&b"
+    status:
+      main: "&6Status: %s"
+      enabled: "&aEnabled"
+      disabled: "&cDisabled"
+    description: "&bDescription: &a%s"
+    version: "&bVersion: &a%s"
+    main: "&bMain class: &a%s"
+    file: "&bJar file: &a%s"
+    author:
+      single: "&bAuthor: &a%s"
+      multiple: "&bAuthors: &a%s"
+    website: "&bWebsite: &a%s"
