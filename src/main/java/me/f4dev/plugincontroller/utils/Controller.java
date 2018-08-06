@@ -38,6 +38,6 @@ public class Controller {
   
   public void enablePlugin(final Plugin pluginInstance) {
     Bukkit.getPluginManager().enablePlugin(pluginInstance);
-    
+    plugin.pluginListManager.removePlugin(pluginInstance.getName());
   }
 }

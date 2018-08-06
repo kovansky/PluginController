@@ -49,14 +49,14 @@ public class PluginListManager {
     
     if(plugins.contains(pluginName)) {
       plugins.remove(pluginName);
-    }
-    
-    fileConfiguration.set("disabled", plugins);
-    
-    try {
-      fileConfiguration.save(list);
-    } catch(IOException e) {
-      e.printStackTrace();
+  
+      fileConfiguration.set("disabled", plugins);
+  
+      try {
+        fileConfiguration.save(list);
+      } catch(IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 }
