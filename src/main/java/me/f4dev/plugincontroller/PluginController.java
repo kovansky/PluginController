@@ -13,6 +13,11 @@
  * See file LICENSE for full license details.
  */
 
+/*
+ * This file is part of PluginController project by F4 Developer which is released under GNU General Public License v3.0.
+ * See file LICENSE for full license details.
+ */
+
 package me.f4dev.plugincontroller;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,7 +39,8 @@ public final class PluginController extends JavaPlugin {
   
   @Override
   public void onDisable() {
-    // Plugin shutdown logic
+    language = null;
+    getLogger().info("Plugin Controller hes been disabled");
   }
   
   private void initConfig() {
