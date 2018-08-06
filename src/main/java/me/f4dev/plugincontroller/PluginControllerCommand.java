@@ -21,6 +21,24 @@ public class PluginControllerCommand implements CommandExecutor {
   
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    if(args.length == 0) {
+      if(sender.hasPermission("plugincontroller.help")) {
+        String[] subcommands = {"enable", "disable", "load", "unload", "reload", "sreload", "show",
+                "list", "listOptions", "configReload"};
+      
+        sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPluginController " +
+                "Help &2------------------|"));
+      
+        for(String subcommand : subcommands) {
+          sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                  "command" +
+                          ".description." + subcommand)));
+        }
+      
+        sender.sendMessage(PluginController.colorify("&7|------------------------------------|"));
+      }
+    }
+    
     
     
     return true;
