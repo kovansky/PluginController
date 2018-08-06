@@ -1,0 +1,5 @@
+name: PluginController
+version: ${project.version}
+main: me.f4dev.plugincontroller.Main
+prefix: PluginController
+authors: [f4dev]
