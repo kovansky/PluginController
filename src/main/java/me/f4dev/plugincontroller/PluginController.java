@@ -5,6 +5,7 @@
 
 package me.f4dev.plugincontroller;
 
+import me.f4dev.plugincontroller.utils.Controller;
 import me.f4dev.plugincontroller.utils.PluginListManager;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,12 +18,14 @@ public final class PluginController extends JavaPlugin {
   
   public FileConfiguration language;
   public PluginListManager pluginListManager;
+  public Controller controller;
   
   @Override
   public void onEnable() {
     initConfig();
   
     pluginListManager = new PluginListManager(this);
+    controller = new Controller(this);
     
     getLogger().info("Plugin Controller has been enabled.");
   }

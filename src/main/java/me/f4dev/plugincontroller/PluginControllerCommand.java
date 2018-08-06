@@ -5,9 +5,11 @@
 
 package me.f4dev.plugincontroller;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 
 public class PluginControllerCommand implements CommandExecutor {
   
@@ -38,8 +40,42 @@ public class PluginControllerCommand implements CommandExecutor {
         sender.sendMessage(PluginController.colorify("&7|------------------------------------|"));
       }
     }
+  
+    switch(args[0].toLowerCase()) {
+      case "enable":
+      case "e":
+        return enableSubcommand(sender, label, args);
+    }
     
-    
+    return true;
+  }
+  
+  private boolean enableSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.enable")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command" +
+                        ".description.enable")));
+        return true;
+      }
+      
+      final Plugin pluginInstance = Bukkit.getServer().getPluginManager().getPlugin(args[1]);
+      
+      if(pluginInstance == null) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noPlugin"), args[1])));
+      } else if(pluginInstance.isEnabled()) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.alreadyEnabled"), args[1])));
+      } else {
+        plugin.controller.enablePlugin(pluginInstance);
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.pluginEnabled"), args[1])));
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
     
     return true;
   }
