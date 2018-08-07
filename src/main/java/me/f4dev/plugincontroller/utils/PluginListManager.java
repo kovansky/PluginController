@@ -44,6 +44,14 @@ public class PluginListManager {
     }
   }
   
+  private void save() {
+    try {
+      fileConfiguration.save(list);
+    } catch(IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
   public void removePlugin(String pluginName) {
     List<String> plugins = fileConfiguration.getStringList("disabled");
     
@@ -52,11 +60,11 @@ public class PluginListManager {
   
       fileConfiguration.set("disabled", plugins);
   
-      try {
-        fileConfiguration.save(list);
-      } catch(IOException e) {
-        e.printStackTrace();
-      }
+      save();
     }
+  }
+  
+  public void addPlugin(String pluginName) {
+  
   }
 }

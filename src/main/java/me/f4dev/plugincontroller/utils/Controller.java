@@ -21,4 +21,8 @@ public class Controller {
     Bukkit.getPluginManager().enablePlugin(pluginInstance);
     plugin.pluginListManager.removePlugin(pluginInstance.getName());
   }
+  
+  public void disablePlugin(final Plugin pluginInstance) {
+    Bukkit.getPluginManager().disablePlugin(pluginInstance);
+  }
 }

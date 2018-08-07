@@ -51,6 +51,9 @@ public class PluginControllerCommand implements CommandExecutor {
       case "enable":
       case "e":
         return enableSubcommand(sender, label, args);
+      case "disable":
+      case "d":
+        return disableSubcommand(sender, label, args);
     }
     
     return true;
@@ -82,7 +85,11 @@ public class PluginControllerCommand implements CommandExecutor {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
               ".noPermission")));
     }
-    // ToDo: tests
+  
+    return true;
+  }
+  
+  private boolean disableSubcommand(CommandSender sender, String label, String[] args) {
     return true;
   }
 }
