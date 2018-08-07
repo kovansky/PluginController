@@ -7,7 +7,12 @@ package me.f4dev.plugincontroller.utils;
 
 import me.f4dev.plugincontroller.PluginController;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 public class Controller {
   
@@ -15,6 +20,23 @@ public class Controller {
   
   public Controller(PluginController plugin) {
     this.plugin = plugin;
+  }
+  
+  public PluginDescriptionFile getDescription(final File file) {
+    try {
+      final JarFile jar = new JarFile(file);
+      final ZipEntry zip = jar.getEntry("plugin.yml");
+      if(zip == null) {
+        jar.close();
+        return null;
+      }
+      final PluginDescriptionFile pdf = new PluginDescriptionFile(jar.getInputStream(zip));
+      jar.close();
+      return pdf;
+    } catch(InvalidDescriptionException | IOException ioe) {
+      ioe.printStackTrace();
+    }
+    return null;
   }
   
   public void enablePlugin(final Plugin pluginInstance) {
@@ -25,5 +47,26 @@ public class Controller {
   public void disablePlugin(final Plugin pluginInstance) {
     Bukkit.getPluginManager().disablePlugin(pluginInstance);
     plugin.pluginListManager.addPlugin(pluginInstance.getName());
+  }
+  
+  public Plugin loadPlugin(final File pluginFile) {
+    Plugin pluginInstance;
+    
+    try {
+      pluginInstance = Bukkit.getPluginManager().loadPlugin(pluginFile);
+      
+      try {
+        pluginInstance.onLoad();
+      } catch(final Exception e) {
+        plugin.getLogger().info(String.format(plugin.language.getString("response.error" +
+                ".failedOnLoad"), plugin.getName()));
+        e.printStackTrace();
+      }
+      
+      return pluginInstance;
+    } catch(InvalidPluginException | InvalidDescriptionException | UnknownDependencyException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }
