@@ -53,7 +53,7 @@ public class Controller {
     Plugin pluginInstance;
     
     try {
-      pluginInstance = Bukkit.getPluginManager().loadPlugin(plugin);
+      pluginInstance = Bukkit.getPluginManager().loadPlugin(pluginFile);
       
       try {
         pluginInstance.onLoad();
