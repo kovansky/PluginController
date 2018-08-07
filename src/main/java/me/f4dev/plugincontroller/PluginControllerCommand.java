@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 import java.io.File;
 
@@ -141,6 +142,22 @@ public class PluginControllerCommand implements CommandExecutor {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                 "response.error.noSuchFile"), fileName)));
       }
+  
+      PluginDescriptionFile descriptionFile = plugin.controller.getDescription(pluginToLoad);
+  
+      if(descriptionFile == null) {
+        sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+                ".noDescription")));
+        return true;
+      }
+  
+      if(Bukkit.getPluginManager().getPlugin(descriptionFile.getName()) != null) {
+        sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+                ".alreadyLoaded")));
+        return true;
+      }
+  
+      Plugin pluginInstance = null;
     } else {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
               ".noPermission")));

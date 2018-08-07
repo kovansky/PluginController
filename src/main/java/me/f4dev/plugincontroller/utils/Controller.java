@@ -50,4 +50,8 @@ public class Controller {
     Bukkit.getPluginManager().disablePlugin(pluginInstance);
     plugin.pluginListManager.addPlugin(pluginInstance.getName());
   }
+  
+  public void loadPlugin(final File pluginFile) {
+  
+  }
 }
