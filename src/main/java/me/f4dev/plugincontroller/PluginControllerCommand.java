@@ -142,8 +142,14 @@ public class PluginControllerCommand implements CommandExecutor {
               new File("plugins" + File.separator + fileName);
       
       if(!pluginToLoad.exists()) {
-        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
-                "response.error.noSuchFile"), fileName)));
+        final File unloadedFile = new File("plugins" + File.separator + fileName + ".unloaded");
+  
+        if(unloadedFile.exists()) {
+          unloadedFile.renameTo(pluginToLoad);
+        } else {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.error.noSuchFile"), fileName)));
+        }
       }
   
       PluginDescriptionFile descriptionFile = plugin.controller.getDescription(pluginToLoad);

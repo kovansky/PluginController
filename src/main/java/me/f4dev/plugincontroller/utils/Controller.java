@@ -37,7 +37,7 @@ public class Controller {
     Field file;
     
     try {
-      file = javaPlugin.getClass().getDeclaredField("file");
+      file = JavaPlugin.class.getDeclaredField("file");
       file.setAccessible(true);
       return (File) file.get(javaPlugin);
     } catch(Exception e) {
