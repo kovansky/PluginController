@@ -60,6 +60,9 @@ public class PluginControllerCommand implements CommandExecutor {
       case "load":
       case "l":
         return loadSubcommand(sender, label, args);
+      case "unload":
+      case "u":
+        return unloadSubcommand(sender, label, args);
     }
     
     return true;
@@ -166,6 +169,38 @@ public class PluginControllerCommand implements CommandExecutor {
       } else {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                 "response.error.pluginNotLoaded"), args[1])));
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+    
+    return true;
+  }
+  
+  private boolean unloadSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.unload")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command" +
+                        ".description.unload")));
+        return true;
+      }
+      
+      final Plugin pluginInstance = Bukkit.getPluginManager().getPlugin(args[1]);
+      
+      if(pluginInstance == null) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noPlugin", args[1]))));
+      } else {
+        if(plugin.controller.unloadPlugin(pluginInstance, true)) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.action.pluginUnloaded"), pluginInstance.getName(),
+                  pluginInstance.getDescription().getVersion())));
+        } else {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.error.pluginNotUnloaded"), args[1])));
+        }
       }
     } else {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
