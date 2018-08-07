@@ -157,51 +157,20 @@ public class PluginControllerCommand implements CommandExecutor {
         return true;
       }
   
-      Plugin pluginInstance = null;
+      Plugin pluginInstance;
+      if((pluginInstance = plugin.controller.loadPlugin(pluginToLoad)) != null) {
+        plugin.controller.enablePlugin(pluginInstance);
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.pluginLoaded"), pluginInstance.getName(),
+                pluginInstance.getDescription().getVersion())));
+      } else {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.pluginNotLoaded"), args[1])));
+      }
     } else {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
               ".noPermission")));
     }
-//    if( !hasPermission( sender, "pluginmanager.load" ) )
-//			return true;
-//
-//		if( split.length < 2 )
-//		{
-//			sender.sendMessage( ChatColor.GOLD + "/" + label + " " + ChatColor.translateAlternateColorCodes( '&', plugin.language.getString( "Command.Description.Load" ) ) );
-//			return true;
-//		}
-//
-//		final File toLoad = new File( "plugins" + File.separator + split[1] + ( split[1].endsWith( ".jar" ) ? "" : ".jar" ) );
-//
-//		if( !toLoad.exists( ) )
-//		{
-//			sender.sendMessage( ChatColor.translateAlternateColorCodes( '&', String.format( plugin.language.getString( "Response.Error.NoSuchFile" ), split[1] + ".jar" ) ) );
-//			return true;
-//		}
-//
-//		PluginDescriptionFile desc = control.getDescription( toLoad );
-//		if( desc == null )
-//		{
-//			sender.sendMessage( ChatColor.translateAlternateColorCodes( '&', plugin.language.getString( "Response.Error.NoDescriptionFile" ) ) );
-//			return true;
-//		}
-//
-//		if( Bukkit.getPluginManager( ).getPlugin( desc.getName( ) ) != null )
-//		{
-//			sender.sendMessage( ChatColor.translateAlternateColorCodes( '&', plugin.language.getString( "Response.Error.AlreadyLoaded" ) ) );
-//			return true;
-//		}
-//
-//		Plugin p = null;
-//		if( ( p = control.loadPlugin( toLoad ) ) != null)
-//		{
-//			control.enablePlugin( p );
-//			sender.sendMessage( ChatColor.translateAlternateColorCodes( '&', String.format( plugin.language.getString( "Response.Action.PluginLoaded" ), p.getDescription( ).getName( ), p.getDescription( ).getVersion( ) ) ) );
-//		}
-//		else
-//			sender.sendMessage( ChatColor.translateAlternateColorCodes( '&', String.format( plugin.language.getString( "Response.Error.PluginNotLoaded" ), split[1] ) ) );
-//
-//		return true;
     
     return true;
   }
