@@ -76,7 +76,7 @@ public class PluginControllerCommand implements CommandExecutor {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
               ".noPermission")));
     }
-    
+    // ToDo: tests
     return true;
   }
 }
