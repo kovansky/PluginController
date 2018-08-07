@@ -51,6 +51,9 @@ public class PluginControllerCommand implements CommandExecutor {
       case "enable":
       case "e":
         return enableSubcommand(sender, label, args);
+      case "disable":
+      case "d":
+        return disableSubcommand(sender, label, args);
     }
     
     return true;
@@ -82,7 +85,37 @@ public class PluginControllerCommand implements CommandExecutor {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
               ".noPermission")));
     }
-    // ToDo: tests
+  
+    return true;
+  }
+  
+  private boolean disableSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.disable")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command" +
+                        ".description.disable")));
+        return true;
+      }
+    
+      final Plugin pluginInstance = Bukkit.getServer().getPluginManager().getPlugin(args[1]);
+    
+      if(pluginInstance == null) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noPlugin"), args[1])));
+      } else if(!pluginInstance.isEnabled()) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.alreadyDisabled"), args[1])));
+      } else {
+        plugin.controller.disablePlugin(pluginInstance);
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.pluginDisabled"), args[1])));
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+  
     return true;
   }
 }

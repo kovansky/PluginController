@@ -44,6 +44,14 @@ public class PluginListManager {
     }
   }
   
+  private void save() {
+    try {
+      fileConfiguration.save(list);
+    } catch(IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
   public void removePlugin(String pluginName) {
     List<String> plugins = fileConfiguration.getStringList("disabled");
     
@@ -52,11 +60,19 @@ public class PluginListManager {
   
       fileConfiguration.set("disabled", plugins);
   
-      try {
-        fileConfiguration.save(list);
-      } catch(IOException e) {
-        e.printStackTrace();
-      }
+      save();
+    }
+  }
+  
+  public void addPlugin(String pluginName) {
+    List<String> plugins = fileConfiguration.getStringList("disabled");
+    
+    if(!plugins.contains(pluginName)) {
+      plugins.add(pluginName);
+      
+      fileConfiguration.set("disabled", plugins);
+      
+      save();
     }
   }
 }
