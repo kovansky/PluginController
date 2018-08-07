@@ -21,3 +21,12 @@ permissions:
   plugincontroller.enable:
     description: Allows you to enable plugins
     default: op
+  plugincontroller.disable:
+    description: Allows you to disable plugins
+    default: op
+  plugincontroller.load:
+    description: Allows you to load plugins
+    default: op
+  plugincontroller.unload:
+    description: Allows you to unload plugins
+    default: op
