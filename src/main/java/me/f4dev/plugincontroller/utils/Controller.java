@@ -24,5 +24,6 @@ public class Controller {
   
   public void disablePlugin(final Plugin pluginInstance) {
     Bukkit.getPluginManager().disablePlugin(pluginInstance);
+    plugin.pluginListManager.addPlugin(pluginInstance.getName());
   }
 }
