@@ -65,6 +65,14 @@ public class PluginListManager {
   }
   
   public void addPlugin(String pluginName) {
-  
+    List<String> plugins = fileConfiguration.getStringList("disabled");
+    
+    if(!plugins.contains(pluginName)) {
+      plugins.add(pluginName);
+      
+      fileConfiguration.set("disabled", plugins);
+      
+      save();
+    }
   }
 }
