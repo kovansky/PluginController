@@ -66,6 +66,7 @@ public class PluginControllerCommand implements CommandExecutor {
         return unloadSubcommand(sender, label, args);
       case "reload":
       case "r":
+      case "rl":
         return reloadSubcommand(sender, label, args);
     }
     
