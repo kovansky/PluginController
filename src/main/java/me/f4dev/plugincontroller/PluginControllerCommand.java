@@ -310,7 +310,7 @@ public class PluginControllerCommand implements CommandExecutor {
       } else {
         File pluginFile = plugin.controller.getFile((JavaPlugin) pluginInstance);
         
-        sender.sendMessage(PluginController.colorify("&a|--- " + String.format(plugin.language.getString("response.details.name"), args[1])) + " &a---|");
+        sender.sendMessage(PluginController.colorify("&a|--- " + String.format(plugin.language.getString("response.details.name"), args[1]) + " &a---|"));
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString("response.details.status.main"), (pluginInstance.isEnabled() ? plugin.language.getString("response.details.status.enabled") : plugin.language.getString("response.details.status.disabled")))));
         
         if(pluginInstance.getDescription().getDescription() != null) {
@@ -330,7 +330,7 @@ public class PluginControllerCommand implements CommandExecutor {
         if(pluginInstance.getDescription().getAuthors() != null) {
           if(!pluginInstance.getDescription().getAuthors().isEmpty()) {
             for(final String author : pluginInstance.getDescription().getAuthors()) {
-              if(author.length() > 0) {
+              if(authors.length() > 0) {
                 authors.append(',');
               }
               
@@ -339,7 +339,7 @@ public class PluginControllerCommand implements CommandExecutor {
           }
         }
         
-        if(authors != null) {
+        if(authors.length() > 0) {
           sender.sendMessage(PluginController.colorify(String.format((pluginInstance.getDescription().getAuthors().size() == 1 ? plugin.language.getString("response.details.author.single") : plugin.language.getString("response.details.author.multiple")), authors)));
         }
         
