@@ -305,7 +305,8 @@ public class PluginControllerCommand implements CommandExecutor {
       
       if(pluginInstance == null) {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
-                "response.error.noplugin"), args[1])));
+                "response.error.noPlugin"), args[1])));
+        return true;
       } else {
         File pluginFile = plugin.controller.getFile((JavaPlugin) pluginInstance);
         
@@ -347,6 +348,9 @@ public class PluginControllerCommand implements CommandExecutor {
                   "response.details.website"), pluginInstance.getDescription().getWebsite())));
         }
       }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
     }
     
     return true;
