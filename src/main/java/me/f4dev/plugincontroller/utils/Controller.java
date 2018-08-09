@@ -198,9 +198,11 @@ public class Controller {
         }
       }
     }
-    
-    for(File pl : reload) {
-      loadPlugin(pl);
+  
+    if(reload != null) {
+      for(File pl : reload) {
+        loadPlugin(pl);
+      }
     }
     
     final JavaPluginLoader javaPluginLoader = (JavaPluginLoader) pluginInstance.getPluginLoader();
