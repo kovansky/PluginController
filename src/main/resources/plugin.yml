@@ -31,5 +31,8 @@ permissions:
     description: Allows you to unload plugins
     default: op
   plugincontroller.reload:
-    description: Allows you to unload plugins
+    description: Allows you to reload plugins
+    default: op
+  plugincontroller.softreload:
+    description: Allows you to soft reload plugins
     default: op
