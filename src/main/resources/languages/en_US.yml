@@ -9,7 +9,7 @@ command:
     unload: "unload <plugin> &b- Unloads a plugin"
     reload: "reload <plugin> &b- Unloads and loads a plugin"
     sreload: "sreload <plugin> &b- Disables and enables a plugin"
-    show: "show <plugin> &b- Shows detailed information about a plugin"
+    details: "details <plugin> &b- Shows detailed information about a plugin"
     list: "list [options] &b- Lists plugins with specified options"
     listOptions: "&eList options\n&e-v &6- Shows plugins with versions\n&e-o &6- Lists options\n&e-a &6- Lists plugins in alphabetical order\n&e-s:name &6- Lists plugins containing the given name"
     configReload: "configreload <plugin> &b- Reloads a plugin's config file."
@@ -40,7 +40,7 @@ response:
       enabled: "&aEnabled plugins: %s"
       disabled: "&aDisabled plugins: &c%s"
     configReload: "&a%s's config reloaded successfully."
-  show:
+  details:
     name: "&bPlugin information: &a%s&b"
     status:
       main: "&6Status: %s"
