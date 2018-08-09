@@ -207,7 +207,7 @@ public class PluginControllerCommand implements CommandExecutor {
       
       if(pluginInstance == null) {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
-                "response.error.noPlugin", args[1]))));
+                "response.error.noPlugin"), args[1])));
       } else {
         if(plugin.controller.unloadPlugin(pluginInstance)) {
           sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
@@ -239,7 +239,7 @@ public class PluginControllerCommand implements CommandExecutor {
       
       if(pluginInstance == null) {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
-                "response.error.noPlugin", args[1]))));
+                "response.error.noPlugin"), args[1])));
       } else {
         if(plugin.controller.unloadPlugin(pluginInstance) && plugin.controller.loadPlugin(pluginFile) != null) {
           sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
@@ -269,7 +269,7 @@ public class PluginControllerCommand implements CommandExecutor {
       
       if(pluginInstance == null) {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
-                "response.error.noPlugin", args[1]))));
+                "response.error.noPlugin"), args[1])));
       } else if(!pluginInstance.isEnabled()) {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                 "response.error.alreadyDisabled"), args[1])));
