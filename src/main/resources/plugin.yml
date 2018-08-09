@@ -30,3 +30,6 @@ permissions:
   plugincontroller.unload:
     description: Allows you to unload plugins
     default: op
+  plugincontroller.reload:
+    description: Allows you to unload plugins
+    default: op

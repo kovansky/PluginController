@@ -81,9 +81,11 @@ public class Controller {
   
     if(!pluginFile.exists()) {
       File unloadedFile = new File(pluginFile.getPath() + ".unloaded");
-    
+  
       if(unloadedFile.exists()) {
         unloadedFile.renameTo(pluginFile);
+      } else {
+        return null;
       }
     }
     
@@ -97,7 +99,8 @@ public class Controller {
                 ".failedOnLoad"), plugin.getName()));
         e.printStackTrace();
       }
-      
+  
+      enablePlugin(pluginInstance);
       return pluginInstance;
     } catch(InvalidPluginException | InvalidDescriptionException | UnknownDependencyException e) {
       e.printStackTrace();
