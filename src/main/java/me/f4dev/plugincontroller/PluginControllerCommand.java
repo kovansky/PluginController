@@ -73,6 +73,11 @@ public class PluginControllerCommand implements CommandExecutor {
       case "s":
       case "srl":
         return softReloadSubcommand(sender, label, args);
+      case "details":
+      case "show":
+      case "info":
+      case "i":
+        return detailsSubcommand(sender, label, args);
     }
     
     return true;
@@ -279,6 +284,69 @@ public class PluginControllerCommand implements CommandExecutor {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                 "response.action.pluginSreloaded"), pluginInstance.getName(),
                 pluginInstance.getDescription().getVersion())));
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+    
+    return true;
+  }
+  
+  private boolean detailsSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.details")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command.description.details")));
+        return true;
+      }
+      
+      final Plugin pluginInstance = Bukkit.getPluginManager().getPlugin(args[1]);
+      
+      if(pluginInstance == null) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noPlugin"), args[1])));
+        return true;
+      } else {
+        File pluginFile = plugin.controller.getFile((JavaPlugin) pluginInstance);
+        
+        sender.sendMessage(PluginController.colorify("&a|--- " + String.format(plugin.language.getString("response.details.name"), args[1]) + " &a---|"));
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString("response.details.status.main"), (pluginInstance.isEnabled() ? plugin.language.getString("response.details.status.enabled") : plugin.language.getString("response.details.status.disabled")))));
+        
+        if(pluginInstance.getDescription().getDescription() != null) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.details.description"), pluginInstance.getDescription().getDescription())));
+        }
+        
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.details.version"), pluginInstance.getDescription().getVersion())));
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.details.main"), pluginInstance.getDescription().getMain())));
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.details.file"), pluginFile.getName())));
+        
+        final StringBuffer authors = new StringBuffer();
+        
+        if(pluginInstance.getDescription().getAuthors() != null) {
+          if(!pluginInstance.getDescription().getAuthors().isEmpty()) {
+            for(final String author : pluginInstance.getDescription().getAuthors()) {
+              if(authors.length() > 0) {
+                authors.append(", ");
+              }
+              
+              authors.append(author);
+            }
+          }
+        }
+        
+        if(authors.length() > 0) {
+          sender.sendMessage(PluginController.colorify(String.format((pluginInstance.getDescription().getAuthors().size() == 1 ? plugin.language.getString("response.details.author.single") : plugin.language.getString("response.details.author.multiple")), authors)));
+        }
+        
+        if(pluginInstance.getDescription().getWebsite() != null) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.details.website"), pluginInstance.getDescription().getWebsite())));
+        }
       }
     } else {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +

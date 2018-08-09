@@ -36,3 +36,6 @@ permissions:
   plugincontroller.softreload:
     description: Allows you to soft reload plugins
     default: op
+  plugincontroller.details:
+    description: Allows you to get details about plugins
+    default: op
