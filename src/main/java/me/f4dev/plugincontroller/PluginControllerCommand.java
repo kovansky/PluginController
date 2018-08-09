@@ -149,6 +149,7 @@ public class PluginControllerCommand implements CommandExecutor {
         } else {
           sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                   "response.error.noSuchFile"), fileName)));
+          return true;
         }
       }
   

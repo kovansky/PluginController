@@ -13,7 +13,6 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -203,23 +202,6 @@ public class Controller {
       for(File pl : reload) {
         loadPlugin(pl);
       }
-    }
-    
-    final JavaPluginLoader javaPluginLoader = (JavaPluginLoader) pluginInstance.getPluginLoader();
-    Field loaders = null;
-
-    try {
-      loaders = javaPluginLoader.getClass().getDeclaredField("loaders");
-      loaders.setAccessible(true);
-    } catch(final Exception e) {
-      e.printStackTrace();
-    }
-    
-    try {
-      final Map<String, ?> loaderMap = (Map<String, ?>) loaders.get(javaPluginLoader);
-      loaderMap.remove(pluginInstance.getDescription().getName());
-    } catch(final Exception e) {
-      e.printStackTrace();
     }
     
     ClassLoader cl = pluginInstance.getClass().getClassLoader();
