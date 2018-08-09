@@ -77,7 +77,7 @@ public class PluginControllerCommand implements CommandExecutor {
       case "show":
       case "info":
       case "i":
-        return true;
+        return detailsSubcommand(sender, label, args);
     }
     
     return true;
