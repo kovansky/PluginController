@@ -68,6 +68,11 @@ public class PluginControllerCommand implements CommandExecutor {
       case "r":
       case "rl":
         return reloadSubcommand(sender, label, args);
+      case "softreload":
+      case "sreload":
+      case "s":
+      case "srl":
+        return softReloadSubcommand(sender, label, args);
     }
     
     return true;
@@ -137,8 +142,7 @@ public class PluginControllerCommand implements CommandExecutor {
     if(sender.hasPermission("plugincontroller.load")) {
       if(args.length < 2) {
         sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
-                "command" +
-                        ".description.load")));
+                "command.description.load")));
         return true;
       }
       
@@ -244,6 +248,37 @@ public class PluginControllerCommand implements CommandExecutor {
           sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                   "response.error.reloadError"), args[1])));
         }
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+    
+    return true;
+  }
+  
+  private boolean softReloadSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.softreload")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command.description.sreload")));
+        return true;
+      }
+      
+      final Plugin pluginInstance = Bukkit.getPluginManager().getPlugin(args[1]);
+      
+      if(pluginInstance == null) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noPlugin", args[1]))));
+      } else if(!pluginInstance.isEnabled()) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.alreadyDisabled"), args[1])));
+      } else {
+        plugin.controller.disablePlugin(pluginInstance);
+        plugin.controller.enablePlugin(pluginInstance);
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.pluginSreloaded"), pluginInstance.getName(),
+                pluginInstance.getDescription().getVersion())));
       }
     } else {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
