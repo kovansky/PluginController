@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
@@ -63,6 +64,10 @@ public class PluginControllerCommand implements CommandExecutor {
       case "unload":
       case "u":
         return unloadSubcommand(sender, label, args);
+      case "reload":
+      case "r":
+      case "rl":
+        return reloadSubcommand(sender, label, args);
     }
     
     return true;
@@ -207,6 +212,37 @@ public class PluginControllerCommand implements CommandExecutor {
         } else {
           sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                   "response.error.pluginNotUnloaded"), args[1])));
+        }
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+    
+    return true;
+  }
+  
+  private boolean reloadSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.reload")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command.description.reload")));
+        return true;
+      }
+      
+      final Plugin pluginInstance = Bukkit.getPluginManager().getPlugin(args[1]);
+      final File pluginFile = plugin.controller.getFile((JavaPlugin) pluginInstance);
+      
+      if(pluginInstance == null) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noPlugin", args[1]))));
+      } else {
+        if(plugin.controller.unloadPlugin(pluginInstance) && plugin.controller.loadPlugin(pluginFile) != null) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.action.pluginReloaded"), pluginInstance.getName())));
+        } else {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.error.reloadError"), args[1])));
         }
       }
     } else {
