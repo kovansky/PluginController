@@ -149,6 +149,7 @@ public class PluginControllerCommand implements CommandExecutor {
         } else {
           sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                   "response.error.noSuchFile"), fileName)));
+          return true;
         }
       }
   
@@ -199,7 +200,7 @@ public class PluginControllerCommand implements CommandExecutor {
         sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                 "response.error.noPlugin", args[1]))));
       } else {
-        if(plugin.controller.unloadPlugin(pluginInstance, true)) {
+        if(plugin.controller.unloadPlugin(pluginInstance)) {
           sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
                   "response.action.pluginUnloaded"), pluginInstance.getName(),
                   pluginInstance.getDescription().getVersion())));
