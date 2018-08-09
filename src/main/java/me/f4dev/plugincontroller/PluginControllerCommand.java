@@ -331,7 +331,7 @@ public class PluginControllerCommand implements CommandExecutor {
           if(!pluginInstance.getDescription().getAuthors().isEmpty()) {
             for(final String author : pluginInstance.getDescription().getAuthors()) {
               if(authors.length() > 0) {
-                authors.append(',');
+                authors.append(", ");
               }
               
               authors.append(author);
