@@ -19,6 +19,7 @@ public final class PluginController extends JavaPlugin {
   public FileConfiguration language;
   public PluginListManager pluginListManager;
   public Controller controller;
+  public String update = null;
   
   @Override
   public void onEnable() {

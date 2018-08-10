@@ -1,5 +1,5 @@
 updater:
   startCheck: true  # Check for update in selected channel on startup.
   notify: true # Notify anyone with permission on joining that there is an update available.
-  channel: Stable # Allowed values are Stable/Beta/Snapshot; Used to check for updates in each channel.
+  channel: stable # Allowed values are stable/beta/snapshot; Used to check for updates in each channel.
 language: en_US # Short locale code. Files found in /plugins/PluginManager/localization folder.
