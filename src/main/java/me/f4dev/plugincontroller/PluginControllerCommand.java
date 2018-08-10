@@ -428,8 +428,8 @@ public class PluginControllerCommand implements CommandExecutor {
       }
       
       for(Plugin pluginInstance : plugins) {
-        String entry = pluginInstance.getName() + (versions ?
-                " " + pluginInstance.getDescription().getVersion() : "");
+        String entry = "&9" + pluginInstance.getName() + (versions ?
+                " &7(" + pluginInstance.getDescription().getVersion() + ")&9" : "");
         
         if(pluginInstance.isEnabled()) {
           if(enabled.length() == 0) {

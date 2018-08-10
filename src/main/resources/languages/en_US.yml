@@ -38,7 +38,7 @@ response:
     pluginSreloaded: "&a%1$s %2$s soft-reloaded successfully."
     list:
       enabled: "&aEnabled plugins: %s"
-      disabled: "&aDisabled plugins: &c%s"
+      disabled: "&cDisabled plugins: %s"
     configReload: "&a%s's config reloaded successfully."
   details:
     name: "&bPlugin information: &a%s&b"
