@@ -65,7 +65,7 @@ public class SelfUpdateChecker {
             if(updateAvailable(uMajor, uMinor, uRev, cMajor, cMinor, cRev)) {
               logger.info(String.format(plugin.language.getString("response.action" +
                       ".updateAvailable"), uChannel, uMajor, uMinor, uRev, cMajor, cMinor, cRev));
-              plugin.update = String.format("&a" + plugin.language.getString("response.action" +
+              plugin.updateMessage = String.format("&a" + plugin.language.getString("response.action" +
                       ".updateAvailable"), "&c" + uChannel + "&a", "&6" + uMajor, uMinor, uRev +
                       "&a", "&6" + cMajor, cMinor, cRev + "&a");
             } else {

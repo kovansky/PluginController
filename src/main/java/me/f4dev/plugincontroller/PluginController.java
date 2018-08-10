@@ -5,6 +5,7 @@
 
 package me.f4dev.plugincontroller;
 
+import me.f4dev.plugincontroller.listeners.JoinNotifyListener;
 import me.f4dev.plugincontroller.utils.Controller;
 import me.f4dev.plugincontroller.utils.PluginListManager;
 import me.f4dev.plugincontroller.utils.SelfUpdateChecker;
@@ -20,7 +21,7 @@ public final class PluginController extends JavaPlugin {
   public FileConfiguration language;
   public PluginListManager pluginListManager;
   public Controller controller;
-  public String update = null;
+  public String updateMessage = null;
   
   @Override
   public void onEnable() {
@@ -32,6 +33,8 @@ public final class PluginController extends JavaPlugin {
     PluginControllerCommand pluginControllerCommand = new PluginControllerCommand(this);
     PluginControllerTabCompleter pluginControllerTabCompleter =
             new PluginControllerTabCompleter(this);
+  
+    JoinNotifyListener joinNotifyListener = new JoinNotifyListener(this);
   
     SelfUpdateChecker selfUpdateChecker = new SelfUpdateChecker(this);
     selfUpdateChecker.startUpdateCheck();
