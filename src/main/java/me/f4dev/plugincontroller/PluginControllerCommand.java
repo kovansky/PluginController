@@ -14,6 +14,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class PluginControllerCommand implements CommandExecutor {
   
@@ -29,16 +32,15 @@ public class PluginControllerCommand implements CommandExecutor {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if(args.length == 0 || (args.length == 1 && (args[0].equals("help") || args[0].equals("h")))) {
       if(sender.hasPermission("plugincontroller.help")) {
-        String[] subcommands = {"enable", "disable", "load", "unload", "reload", "sreload", "show",
-                "list", "listOptions", "configReload"};
+        String[] subcommands = {"enable", "disable", "load", "unload", "reload", "sreload",
+                "details", "list", "configReload"};
   
         sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPluginController " +
                 "Help &2------------------|"));
   
         for(String subcommand : subcommands) {
           sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
-                  "command" +
-                          ".description." + subcommand)));
+                  "command.description." + subcommand)));
         }
   
         sender.sendMessage(PluginController.colorify("&7|------------------------------------|"));
@@ -78,6 +80,9 @@ public class PluginControllerCommand implements CommandExecutor {
       case "info":
       case "i":
         return detailsSubcommand(sender, label, args);
+      case "list":
+      case "ls":
+        return listSubcommand(sender, label, args);
     }
     
     return true;
@@ -353,6 +358,116 @@ public class PluginControllerCommand implements CommandExecutor {
               ".noPermission")));
     }
     
+    return true;
+  }
+  
+  private boolean listSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.list")) {
+      boolean versions = false;
+      boolean options = false;
+      boolean alphabetical = false;
+      String search = "";
+      
+      for(String str : args) {
+        if(str.equalsIgnoreCase("-o") || str.equalsIgnoreCase("-options")) {
+          options = true;
+        }
+        if(str.equalsIgnoreCase("-v") || str.equalsIgnoreCase("-verison")) {
+          versions = true;
+        }
+        if(str.equalsIgnoreCase("-a") || str.equalsIgnoreCase("-alphabetical")) {
+          alphabetical = true;
+        }
+        if(str.startsWith("-s:") || str.startsWith("-search:")) {
+          String[] strings = str.split("[:]", 2);
+          
+          if(strings.length != 2) {
+            continue;
+          }
+          
+          search = strings[1];
+        }
+      }
+      
+      if(options) {
+        String[] optionsString =
+                plugin.language.getString("command.description.listOptions").split("\n");
+        
+        for(String str : optionsString) {
+          sender.sendMessage(PluginController.colorify(str));
+        }
+        
+        return true;
+      }
+      
+      Plugin[] pluginsArray = Bukkit.getPluginManager().getPlugins();
+      StringBuilder enabled = new StringBuilder();
+      StringBuilder disabled = new StringBuilder();
+  
+      ArrayList<Plugin> plugins = new ArrayList<>(Arrays.asList(pluginsArray));
+      
+      if(!search.isEmpty()) {
+        String finalSearch = search;
+        plugins.removeIf(pluginInstance -> !pluginInstance.getName().contains(finalSearch));
+      }
+      
+      if(alphabetical) {
+        ArrayList<String> pluginsCollection = new ArrayList<>();
+        
+        for(Plugin pluginInstance : plugins) {
+          pluginsCollection.add(pluginInstance.getName());
+        }
+  
+        Collections.sort(pluginsCollection);
+        
+        plugins = new ArrayList<>();
+        
+        for(String pluginEntry : pluginsCollection) {
+          plugins.add(Bukkit.getPluginManager().getPlugin(pluginEntry));
+        }
+      }
+      
+      for(Plugin pluginInstance : plugins) {
+        String pluginName = pluginInstance.getName();
+  
+        if(!search.isEmpty()) {
+          int index = pluginName.indexOf(search);
+          
+          pluginName =
+                  pluginName.substring(0, index) + "&5" + search + "&9" + pluginName.substring(index + search.length());
+        }
+        
+        String entry = "&9&l" + pluginName + (versions ?
+                " &6(" + pluginInstance.getDescription().getVersion() + ")&9&l" : "");
+        
+        if(pluginInstance.isEnabled()) {
+          if(enabled.length() == 0) {
+            enabled = new StringBuilder(entry);
+          } else {
+            enabled.append(", ").append(entry);
+          }
+        } else {
+          if(disabled.length() == 0) {
+            disabled = new StringBuilder(entry);
+          } else {
+            disabled.append(", ").append(entry);
+          }
+        }
+      }
+      
+      if(enabled.length() > 0) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.list.enabled"), enabled)));
+      }
+      if(disabled.length() > 0) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.list.disabled"), disabled)));
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+  
     return true;
   }
 }
