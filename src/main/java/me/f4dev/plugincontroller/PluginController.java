@@ -9,12 +9,15 @@ import me.f4dev.plugincontroller.listeners.JoinNotifyListener;
 import me.f4dev.plugincontroller.utils.Controller;
 import me.f4dev.plugincontroller.utils.PluginListManager;
 import me.f4dev.plugincontroller.utils.SelfUpdateChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 public final class PluginController extends JavaPlugin {
   
@@ -38,6 +41,30 @@ public final class PluginController extends JavaPlugin {
   
     SelfUpdateChecker selfUpdateChecker = new SelfUpdateChecker(this);
     selfUpdateChecker.startUpdateCheck();
+    
+    File listFile = new File(getDataFolder(), "list.yml");
+    if(listFile.exists()) {
+      FileConfiguration disabledPlugins = YamlConfiguration.loadConfiguration(listFile);
+      boolean isReload = (disabledPlugins.contains("reload") && disabledPlugins.getBoolean(
+              "reload"));
+      if(isReload) {
+        disabledPlugins.set("reload", null);
+        getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+          List<String> disabledList = disabledPlugins.getStringList("disabled");
+          for(String pl : disabledList) {
+            controller.disablePlugin(Bukkit.getPluginManager().getPlugin(pl));
+          }
+        });
+      } else {
+        disabledPlugins.set("disabled", null);
+      }
+  
+      try {
+        disabledPlugins.save(listFile);
+      } catch(IOException e) {
+        e.printStackTrace();
+      }
+    }
     
     getLogger().info("Plugin Controller has been enabled.");
   }
