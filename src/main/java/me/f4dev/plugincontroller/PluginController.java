@@ -5,6 +5,7 @@
 
 package me.f4dev.plugincontroller;
 
+import me.f4dev.plugincontroller.listeners.CommandPreprocessListener;
 import me.f4dev.plugincontroller.listeners.JoinNotifyListener;
 import me.f4dev.plugincontroller.utils.Controller;
 import me.f4dev.plugincontroller.utils.PluginListManager;
@@ -38,6 +39,7 @@ public final class PluginController extends JavaPlugin {
             new PluginControllerTabCompleter(this);
   
     JoinNotifyListener joinNotifyListener = new JoinNotifyListener(this);
+    CommandPreprocessListener commandPreprocessListener = new CommandPreprocessListener(this);
   
     SelfUpdateChecker selfUpdateChecker = new SelfUpdateChecker(this);
     selfUpdateChecker.startUpdateCheck();
