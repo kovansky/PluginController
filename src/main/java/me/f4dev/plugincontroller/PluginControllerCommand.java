@@ -33,7 +33,7 @@ public class PluginControllerCommand implements CommandExecutor {
     if(args.length == 0 || (args.length == 1 && (args[0].equals("help") || args[0].equals("h")))) {
       if(sender.hasPermission("plugincontroller.help")) {
         String[] subcommands = {"enable", "disable", "load", "unload", "reload", "sreload",
-                "details", "list", "listOptions", "configReload"};
+                "details", "list", "configReload"};
   
         sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPluginController " +
                 "Help &2------------------|"));
