@@ -12,7 +12,7 @@ command:
     details: "details <plugin> &b- Shows detailed information about a plugin"
     list: "list [options] &b- Lists plugins with specified options"
     listOptions: "&eList options\n&e-v &6- Shows plugins with versions\n&e-o &6- Lists options\n&e-a &6- Lists plugins in alphabetical order\n&e-s:name &6- Lists plugins containing the given name"
-    configReload: "configreload <plugin> &b- Reloads a plugin's config file."
+    configReload: "configreload [plugin] &b- Reloads a plugin's config file."
 response:
   error:
     noCommand: "&cCommand %2$s not found. Try /%1$s for help!"
