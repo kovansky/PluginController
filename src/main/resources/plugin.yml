@@ -39,3 +39,6 @@ permissions:
   plugincontroller.details:
     description: Allows you to get details about plugins
     default: op
+  plugincontroller.list:
+    description: Allows you to get list of plugins
+    default: op
