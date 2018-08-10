@@ -20,16 +20,16 @@ public final class PluginController extends JavaPlugin {
   public PluginListManager pluginListManager;
   public Controller controller;
   
-  public PluginControllerCommand pluginControllerCommand;
-  
   @Override
   public void onEnable() {
     initConfig();
   
     pluginListManager = new PluginListManager(this);
     controller = new Controller(this);
-  
-    pluginControllerCommand = new PluginControllerCommand(this);
+    
+    PluginControllerCommand pluginControllerCommand = new PluginControllerCommand(this);
+    PluginControllerTabCompleter pluginControllerTabCompleter =
+            new PluginControllerTabCompleter(this);
     
     getLogger().info("Plugin Controller has been enabled.");
   }

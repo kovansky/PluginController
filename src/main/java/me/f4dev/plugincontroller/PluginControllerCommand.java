@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class PluginControllerCommand implements CommandExecutor {
-  
   private PluginController plugin;
   
   public PluginControllerCommand(PluginController plugin) {
