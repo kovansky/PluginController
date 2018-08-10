@@ -42,3 +42,6 @@ permissions:
   plugincontroller.list:
     description: Allows you to get list of plugins
     default: op
+  plugincontroller.configReload:
+    description: Allows you to reload configurations of plugins
+    default: op
