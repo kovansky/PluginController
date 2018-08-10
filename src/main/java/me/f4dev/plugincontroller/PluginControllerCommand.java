@@ -83,6 +83,9 @@ public class PluginControllerCommand implements CommandExecutor {
       case "list":
       case "ls":
         return listSubcommand(sender, label, args);
+      case "configreload":
+      case "cr":
+        return configReloadSubcommand(sender, label, args);
     }
     
     return true;
@@ -468,6 +471,33 @@ public class PluginControllerCommand implements CommandExecutor {
               ".noPermission")));
     }
   
+    return true;
+  }
+  
+  private boolean configReloadSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.configreload")) {
+      Plugin pluginInstance;
+      
+      if(args.length < 2) {
+        pluginInstance = plugin;
+      } else {
+        pluginInstance = Bukkit.getPluginManager().getPlugin(args[1]);
+      }
+      
+      if(pluginInstance == null) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noPlugin"), args[1])));
+        return true;
+      }
+      
+      pluginInstance.reloadConfig();
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.configReload"), pluginInstance.getName())));
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+    
     return true;
   }
 }
