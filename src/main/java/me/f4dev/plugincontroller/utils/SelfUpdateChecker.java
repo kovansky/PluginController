@@ -29,8 +29,7 @@ public class SelfUpdateChecker {
       try {
         logger.info("Checking for a new version...");
         URL url = new URL(readUrl);
-        BufferedReader bufferedReader;
-        bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()));
         String str;
         
         while((str = bufferedReader.readLine()) != null) {
@@ -69,10 +68,14 @@ public class SelfUpdateChecker {
               plugin.update = String.format("&a" + plugin.language.getString("response.action" +
                       ".updateAvailable"), "&c" + uChannel + "&a", "&6" + uMajor, uMinor, uRev +
                       "&a", "&6" + cMajor, cMinor, cRev + "&a");
+            } else {
+              logger.info("No updates.");
             }
+          } else {
+            logger.info("No updates.");
           }
-          bufferedReader.close();
         }
+        bufferedReader.close();
       } catch(IOException e) {
         logger.severe("The SelfUpdateCheck URL is invalid! Please inform developer " +
                 "(plugincontroller@f4dev.me)");
