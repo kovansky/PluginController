@@ -7,6 +7,7 @@ package me.f4dev.plugincontroller;
 
 import me.f4dev.plugincontroller.utils.Controller;
 import me.f4dev.plugincontroller.utils.PluginListManager;
+import me.f4dev.plugincontroller.utils.SelfUpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,6 +20,7 @@ public final class PluginController extends JavaPlugin {
   public FileConfiguration language;
   public PluginListManager pluginListManager;
   public Controller controller;
+  public String update = null;
   
   @Override
   public void onEnable() {
@@ -30,6 +32,9 @@ public final class PluginController extends JavaPlugin {
     PluginControllerCommand pluginControllerCommand = new PluginControllerCommand(this);
     PluginControllerTabCompleter pluginControllerTabCompleter =
             new PluginControllerTabCompleter(this);
+  
+    SelfUpdateChecker selfUpdateChecker = new SelfUpdateChecker(this);
+    selfUpdateChecker.startUpdateCheck();
     
     getLogger().info("Plugin Controller has been enabled.");
   }
