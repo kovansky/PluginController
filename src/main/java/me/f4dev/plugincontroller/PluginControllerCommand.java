@@ -436,7 +436,8 @@ public class PluginControllerCommand implements CommandExecutor {
           int index = pluginName.indexOf(search);
           
           pluginName =
-                  pluginName.substring(0, index) + "&5" + search + "&9" + pluginName.substring(index + search.length());
+                  pluginName.substring(0, index) + "&5" + search + "&9&l" + pluginName.substring
+                          (index + search.length());
         }
         
         String entry = "&9&l" + pluginName + (versions ?
