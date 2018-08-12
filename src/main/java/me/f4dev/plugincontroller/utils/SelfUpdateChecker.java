@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class SelfUpdateChecker {
   private PluginController plugin;
   private String currentVersion;
-  private String readUrl = "https://gitlab.com/kovansky/PluginController/raw/feature/plc-4/version.txt";
+  private String readUrl = "https://gitlab.com/kovansky/PluginController/raw/develop/version.txt";
   
   public SelfUpdateChecker(PluginController plugin) {
     this.plugin = plugin;
