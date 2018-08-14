@@ -17,6 +17,9 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SpigetClient {
   private static final String spigetURL = "https://api.spiget.org/v2/";
@@ -96,16 +99,33 @@ public class SpigetClient {
     return null;
   }
   
-  public static ListItem[] search(String query) {
+  public static ArrayList<ListItem> search(String query) {
     return search(query, 10, 0);
   }
   
-  public static ListItem[] search(String query, int size, int page) {
+  public static ArrayList<ListItem> search(String query, int size, int page) {
+    return search(query, size, page, false);
+  }
+  
+  public static ArrayList<ListItem> search(String query, int size, int page, boolean fullItem) {
     try {
       String json = getJson(spigetURL + "search/resources/" + query + "?page=" + page + "&size=" + size);
       if(json != null) {
         Gson gson = new Gson();
-        return gson.fromJson(json, ListItem[].class);
+        ListItem[] list = gson.fromJson(json, ListItem[].class);
+        
+        if(fullItem) {
+          ArrayList<ListItem> fullList = new ArrayList<>();
+  
+          for(ListItem plugin : list) {
+            ListItem fullPlugin = get(plugin.id);
+            fullList.add(fullPlugin);
+          }
+          
+          return fullList;
+        } else {
+          return new ArrayList<>(Arrays.asList(list));
+        }
       }
     } catch(IOException ex) {
       return null;

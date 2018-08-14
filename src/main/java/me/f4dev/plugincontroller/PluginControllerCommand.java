@@ -506,12 +506,15 @@ public class PluginControllerCommand implements CommandExecutor {
     if(sender.hasPermission("plugincontroller.search")) {
       LinkedHashMap<Integer, SpigetClient.ListItem> foundPlugins = new LinkedHashMap<>();
       
+      // TODO: Messages to language file, search for paid plugins and external plugins
+      
       int size = 10;
       int page = (args.length == 3 ? Integer.parseInt(args[2]) : 1);
       
-      SpigetClient.ListItem[] spigetSearch = SpigetClient.search(args[1], size, page);
+      ArrayList<SpigetClient.ListItem> spigetSearch = SpigetClient.search(args[1], size, page,
+              true);
       
-      if(spigetSearch != null && spigetSearch.length > 0) {
+      if(spigetSearch != null && spigetSearch.size() > 0) {
         for(SpigetClient.ListItem spigetPlugin : spigetSearch) {
           if(!foundPlugins.containsKey(spigetPlugin.id)) {
             foundPlugins.put(spigetPlugin.id, spigetPlugin);
