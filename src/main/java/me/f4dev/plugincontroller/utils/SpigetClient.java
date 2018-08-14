@@ -28,6 +28,7 @@ public class SpigetClient {
     public String contributors;
     public String description;
     public int likes;
+    public boolean premium;
     
     public class File {
       public String type;

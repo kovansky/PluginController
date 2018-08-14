@@ -5,6 +5,7 @@
 
 package me.f4dev.plugincontroller;
 
+import me.f4dev.plugincontroller.utils.SpigetClient;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,9 +15,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 public class PluginControllerCommand implements CommandExecutor {
   private PluginController plugin;
@@ -86,7 +85,7 @@ public class PluginControllerCommand implements CommandExecutor {
       case "cr":
         return configReloadSubcommand(sender, label, args);
       case "search":
-        return true;
+        return searchSubcommand(sender, label, args);
     }
     
     return true;
@@ -505,11 +504,59 @@ public class PluginControllerCommand implements CommandExecutor {
   
   private boolean searchSubcommand(CommandSender sender, String label, String[] args) {
     if(sender.hasPermission("plugincontroller.search")) {
-      String[] keywords = Arrays.copyOfRange(args, 1, args.length);
+      LinkedHashMap<Integer, SpigetClient.ListItem> foundPlugins = new LinkedHashMap<>();
       
-      for(String search : keywords) {
+      int size = 10;
+      int page = (args.length == 3 ? Integer.parseInt(args[2]) : 1);
       
+      SpigetClient.ListItem[] spigetSearch = SpigetClient.search(args[1], size, page);
+      
+      if(spigetSearch != null && spigetSearch.length > 0) {
+        for(SpigetClient.ListItem spigetPlugin : spigetSearch) {
+          if(!foundPlugins.containsKey(spigetPlugin.id)) {
+            foundPlugins.put(spigetPlugin.id, spigetPlugin);
+          }
+        }
+      } else {
+        sender.sendMessage(PluginController.colorify("&cNo results for &9" + args[1]));
+        return true;
       }
+  
+      sender.sendMessage(PluginController.colorify("&2|------------------ &6&lSearch for " +
+              "&9" + args[1] + " &2------------------|"));
+      
+      for(Map.Entry<Integer, SpigetClient.ListItem> entry : foundPlugins.entrySet()) {
+        SpigetClient.ListItem pl = entry.getValue();
+        StringBuilder pluginMessage = new StringBuilder("&2* &9#%d &c&l%s");
+        
+        if(pl.premium) {
+          pluginMessage.append(" ").append("&6$$$");
+        }
+        
+        if(pl.external) {
+          pluginMessage.append(" ").append("&7[&2E&7]");
+        }
+        
+        sender.sendMessage(PluginController.colorify(String.format(pluginMessage.toString(),
+                pl.id, pl.name)));
+      }
+      
+      sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPage &9" + page +
+              " &2------------------|"));
+      
+      if(page > 1) {
+        sender.sendMessage(PluginController.colorify("&2<-- use &6/" + label + " search " +
+                "&9" + args[1] + " &c&l" + (page - 1) + " &2to see previous page"));
+      }
+      
+      sender.sendMessage(PluginController.colorify("&2--> use &6/" + label + " search " +
+              "&9" + args[1] + " &c&l" + (page + 1) + " &2to see next page"));
+      
+      sender.sendMessage(PluginController.colorify("&2^^^ use &6/" + label + " more " +
+              "&c&l[plugin ID] &2to see details about plugin"));
+      
+      sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPluginController " +
+              "&2------------------|"));
     }
     
     return false;
