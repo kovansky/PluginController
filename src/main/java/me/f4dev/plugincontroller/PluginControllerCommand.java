@@ -85,6 +85,8 @@ public class PluginControllerCommand implements CommandExecutor {
       case "configreload":
       case "cr":
         return configReloadSubcommand(sender, label, args);
+      case "search":
+        return true;
     }
     
     return true;
@@ -499,5 +501,17 @@ public class PluginControllerCommand implements CommandExecutor {
     }
     
     return true;
+  }
+  
+  private boolean searchSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.search")) {
+      String[] keywords = Arrays.copyOfRange(args, 1, args.length);
+      
+      for(String search : keywords) {
+      
+      }
+    }
+    
+    return false;
   }
 }
