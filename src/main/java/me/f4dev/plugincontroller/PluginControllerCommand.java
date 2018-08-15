@@ -5,6 +5,7 @@
 
 package me.f4dev.plugincontroller;
 
+import me.f4dev.plugincontroller.utils.SpigetClient;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,9 +15,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 public class PluginControllerCommand implements CommandExecutor {
   private PluginController plugin;
@@ -85,6 +84,8 @@ public class PluginControllerCommand implements CommandExecutor {
       case "configreload":
       case "cr":
         return configReloadSubcommand(sender, label, args);
+      case "search":
+        return searchSubcommand(sender, label, args);
     }
     
     return true;
@@ -499,5 +500,77 @@ public class PluginControllerCommand implements CommandExecutor {
     }
     
     return true;
+  }
+  
+  private boolean searchSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.search")) {
+      String paidSign = plugin.language.getString("response.action.search.entry.paid");
+      String externalSign = plugin.language.getString("response.action.search.entry.external");
+      
+      LinkedHashMap<Integer, SpigetClient.ListItem> foundPlugins = new LinkedHashMap<>();
+      
+      int size = 10;
+      int page = (args.length == 3 ? Integer.parseInt(args[2]) : 1);
+      
+      ArrayList<SpigetClient.ListItem> spigetSearch = SpigetClient.search(args[1], size, page,
+              true);
+      
+      if(spigetSearch != null && spigetSearch.size() > 0) {
+        for(SpigetClient.ListItem spigetPlugin : spigetSearch) {
+          if(!foundPlugins.containsKey(spigetPlugin.id)) {
+            foundPlugins.put(spigetPlugin.id, spigetPlugin);
+          }
+        }
+      } else {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noResults"), args[1])));
+        return true;
+      }
+  
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.header"), args[1])));
+      
+      for(Map.Entry<Integer, SpigetClient.ListItem> entry : foundPlugins.entrySet()) {
+        SpigetClient.ListItem pl = entry.getValue();
+        StringBuilder pluginMessage = new StringBuilder(plugin.language.getString("response" +
+                ".action.search.entry.main"));
+        boolean canDownload = true;
+        
+        if(pl.premium) {
+          pluginMessage.append(" ").append(paidSign);
+          canDownload = false;
+        }
+        
+        if(pl.external) {
+          pluginMessage.append(" ").append(externalSign);
+          canDownload = false;
+        }
+        
+        sender.sendMessage(PluginController.colorify(String.format(pluginMessage.toString(),
+                pl.id, (canDownload ? "&a" : "&c") + "&l" + pl.name)));
+      }
+      
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.page.actual"), page)));
+      
+      if(page > 1) {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.search.page.previous"), label, args[1], (page - 1))));
+      }
+  
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.page.next"), label, args[1], (page + 1))));
+      
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.more"), label)));
+  
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.definitions"), paidSign, externalSign)));
+      
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.action" +
+              ".search.footer")));
+    }
+    
+    return false;
   }
 }
