@@ -2,8 +2,10 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Version: 1.0.0-BETA](https://img.shields.io/badge/Version-1.0.0--BETA-brightgreen.svg)](https://gitlab.com/kovansky/PluginController)
 
-## Changelog
+This plugin is rewrite of [Plugin Manager Reloaded](https://www.spigotmc.org/resources/plugin-manager-reloaded.7144/)
+with new features - downloading plugins from Spigot. Made by [F4 Developer](http://f4dev.me).
 
+## Changelog
 ### 1.0.0-BETA
 #### First beta release
 Everything is new :smiley: 
