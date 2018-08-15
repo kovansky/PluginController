@@ -5,7 +5,7 @@ command:
   description:
     enable: "enable <plugin> &b- Enables a plugin"
     disable: "disable <plugin> &b- Disables a plugin"
-    load: "load <plugin> &b- Loads a plugin(Must use a file name, no .jar needed)"
+    load: "load <plugin> &b- Loads a plugin (Must use a file name, no .jar needed)"
     unload: "unload <plugin> &b- Unloads a plugin"
     reload: "reload <plugin> &b- Unloads and loads a plugin"
     sreload: "sreload <plugin> &b- Disables and enables a plugin"
@@ -13,6 +13,7 @@ command:
     list: "list [options] &b- Lists plugins with specified options"
     listOptions: "&eList options\n&e-v &6- Shows plugins with versions\n&e-o &6- Lists options\n&e-a &6- Lists plugins in alphabetical order\n&e-s:name &6- Lists plugins containing the given name"
     configReload: "configreload [plugin] &b- Reloads a plugin's config file."
+    search: "search <query> [page] &b- Search for plugin on Spigot plugin repository"
 response:
   error:
     noCommand: "&cCommand %2$s not found. Try /%1$s for help!"
@@ -28,6 +29,7 @@ response:
     unloadError: "&cAn error occurred while unloading %s!"
     unloadFailed: "&cFailed to unload %s! (Check console for details.)"
     noJar: "&c%s's jar file is missing!"
+    noResults: "&cNo results for &9%s"
   action:
     updateAvailable: "There is a new %1$s build %2$s.%3$s.%4$s available for PluginController.
     Current version: %5$s.%6$s.%7$s"
@@ -41,6 +43,19 @@ response:
       enabled: "&aEnabled plugins: %s"
       disabled: "&cDisabled plugins: %s"
     configReload: "&a%s's config reloaded successfully."
+    search:
+      header: "&2|------------------ &6&lSearch results for &9%s &2------------------|"
+      entry:
+        main: "&2* &9#%d %s" # %d -> plugin id, %s -> plugin name
+        paid: "&6$$$"
+        external: "&7[&5E&7]"
+      page:
+        actual: "&2|------------------ &6&lPage &9%d &2------------------|" # %d -> page number
+        previous: "&2<-- use &6/%s search &9%s &c&l%d &2to see previous page" # First %s -> command label, second %s -> query, %d -> previous page number
+        next: "&2--> use &6/%s search &9%s &c&l%d &2to see next page" # First %s -> command label, second %s -> query, %d -> next page number
+      more: "&2^^^ use &6/%s more &c&l[plugin ID] &2to see details about plugin" # %s -> command label
+      definitions: "%s &2-> Paid plugin; %s &2-> External download" # First %s -> paid sign, second %s -> external sign
+      footer: "&2|------------------ &6&lPluginController &2------------------|"
   details:
     name: "&bPlugin information: &a%s&b"
     status:

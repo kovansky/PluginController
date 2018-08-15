@@ -504,9 +504,10 @@ public class PluginControllerCommand implements CommandExecutor {
   
   private boolean searchSubcommand(CommandSender sender, String label, String[] args) {
     if(sender.hasPermission("plugincontroller.search")) {
-      LinkedHashMap<Integer, SpigetClient.ListItem> foundPlugins = new LinkedHashMap<>();
+      String paidSign = plugin.language.getString("response.action.search.entry.paid");
+      String externalSign = plugin.language.getString("response.action.search.entry.external");
       
-      // TODO: Messages to language file, search for paid plugins and external plugins
+      LinkedHashMap<Integer, SpigetClient.ListItem> foundPlugins = new LinkedHashMap<>();
       
       int size = 10;
       int page = (args.length == 3 ? Integer.parseInt(args[2]) : 1);
@@ -521,45 +522,53 @@ public class PluginControllerCommand implements CommandExecutor {
           }
         }
       } else {
-        sender.sendMessage(PluginController.colorify("&cNo results for &9" + args[1]));
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noResults"), args[1])));
         return true;
       }
   
-      sender.sendMessage(PluginController.colorify("&2|------------------ &6&lSearch for " +
-              "&9" + args[1] + " &2------------------|"));
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.header"), args[1])));
       
       for(Map.Entry<Integer, SpigetClient.ListItem> entry : foundPlugins.entrySet()) {
         SpigetClient.ListItem pl = entry.getValue();
-        StringBuilder pluginMessage = new StringBuilder("&2* &9#%d &c&l%s");
+        StringBuilder pluginMessage = new StringBuilder(plugin.language.getString("response" +
+                ".action.search.entry.main"));
+        boolean canDownload = true;
         
         if(pl.premium) {
-          pluginMessage.append(" ").append("&6$$$");
+          pluginMessage.append(" ").append(paidSign);
+          canDownload = false;
         }
         
         if(pl.external) {
-          pluginMessage.append(" ").append("&7[&2E&7]");
+          pluginMessage.append(" ").append(externalSign);
+          canDownload = false;
         }
         
         sender.sendMessage(PluginController.colorify(String.format(pluginMessage.toString(),
-                pl.id, pl.name)));
+                pl.id, (canDownload ? "&a" : "&c") + "&l" + pl.name)));
       }
       
-      sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPage &9" + page +
-              " &2------------------|"));
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.page.actual"), page)));
       
       if(page > 1) {
-        sender.sendMessage(PluginController.colorify("&2<-- use &6/" + label + " search " +
-                "&9" + args[1] + " &c&l" + (page - 1) + " &2to see previous page"));
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.search.page.previous"), label, args[1], (page - 1))));
       }
+  
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.page.next"), label, args[1], (page + 1))));
       
-      sender.sendMessage(PluginController.colorify("&2--> use &6/" + label + " search " +
-              "&9" + args[1] + " &c&l" + (page + 1) + " &2to see next page"));
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.more"), label)));
+  
+      sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+              "response.action.search.definitions"), paidSign, externalSign)));
       
-      sender.sendMessage(PluginController.colorify("&2^^^ use &6/" + label + " more " +
-              "&c&l[plugin ID] &2to see details about plugin"));
-      
-      sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPluginController " +
-              "&2------------------|"));
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.action" +
+              ".search.footer")));
     }
     
     return false;
