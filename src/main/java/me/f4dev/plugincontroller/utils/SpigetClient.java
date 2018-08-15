@@ -19,7 +19,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class SpigetClient {
   private static final String spigetURL = "https://api.spiget.org/v2/";
@@ -31,7 +30,10 @@ public class SpigetClient {
     public String contributors;
     public String description;
     public int likes;
+    
     public boolean premium;
+    public float price;
+    public String currency;
     
     public class File {
       public String type;

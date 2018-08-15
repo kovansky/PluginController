@@ -31,7 +31,7 @@ public class PluginControllerCommand implements CommandExecutor {
     if(args.length == 0 || (args.length == 1 && (args[0].equals("help") || args[0].equals("h")))) {
       if(sender.hasPermission("plugincontroller.help")) {
         String[] subcommands = {"enable", "disable", "load", "unload", "reload", "sreload",
-                "details", "list", "configReload"};
+                "details", "list", "configReload", "search", "more"};
   
         sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPluginController " +
                 "Help &2------------------|"));
@@ -86,6 +86,8 @@ public class PluginControllerCommand implements CommandExecutor {
         return configReloadSubcommand(sender, label, args);
       case "search":
         return searchSubcommand(sender, label, args);
+      case "more":
+        return moreSubcommand(sender, label, args);
     }
     
     return true;
@@ -504,6 +506,12 @@ public class PluginControllerCommand implements CommandExecutor {
   
   private boolean searchSubcommand(CommandSender sender, String label, String[] args) {
     if(sender.hasPermission("plugincontroller.search")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command.description.search")));
+        return true;
+      }
+      
       String paidSign = plugin.language.getString("response.action.search.entry.paid");
       String externalSign = plugin.language.getString("response.action.search.entry.external");
       
@@ -569,8 +577,93 @@ public class PluginControllerCommand implements CommandExecutor {
       
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.action" +
               ".search.footer")));
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
     }
     
     return false;
+  }
+  
+  private boolean moreSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.more")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command.description.more")));
+        return true;
+      }
+      
+      int pluginId;
+      
+      try {
+        pluginId = Integer.parseInt(args[1]);
+      } catch(NumberFormatException e) {
+        ArrayList<SpigetClient.ListItem> searchPlugin = SpigetClient.search(args[1], 1, 1);
+        
+        if(searchPlugin != null) {
+          pluginId = searchPlugin.get(0).id;
+        } else {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.error.noResults"), args[1])));
+          return true;
+        }
+      }
+      SpigetClient.ListItem spigetPlugin = SpigetClient.get(pluginId);
+      
+      if(spigetPlugin != null) {
+        StringBuilder versions = new StringBuilder();
+        
+        for(String version : spigetPlugin.testedVersions) {
+          if(versions.length() > 0) {
+            versions.append(", ");
+          }
+          
+          versions.append(version);
+        }
+        
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.more.header"), spigetPlugin.id, spigetPlugin.name)));
+        
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.more.versions"), versions)));
+        
+        if(spigetPlugin.premium) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.action.more.premium"), spigetPlugin.price, spigetPlugin.currency)));
+        }
+  
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.more.contributors"), spigetPlugin.contributors)));
+  
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.more.tag"), spigetPlugin.tag)));
+  
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.more.likesRating"), spigetPlugin.likes, spigetPlugin.rating.average)));
+  
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.more.downloads"), spigetPlugin.downloads)));
+  
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.more.url"), "https://spigotmc.org/resources/" + spigetPlugin.id)));
+        
+        if(!spigetPlugin.premium && !spigetPlugin.external) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.action.more.download"), label, spigetPlugin.id)));
+        }
+  
+        sender.sendMessage(PluginController.colorify(plugin.language.getString(
+                "response.action.more.footer")));
+      } else {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noResults"), args[1])));
+        return true;
+      }
+    } else {
+      sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
+              ".noPermission")));
+    }
+    
+    return true;
   }
 }

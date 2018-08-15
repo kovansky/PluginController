@@ -14,6 +14,7 @@ command:
     listOptions: "&eList options\n&e-v &6- Shows plugins with versions\n&e-o &6- Lists options\n&e-a &6- Lists plugins in alphabetical order\n&e-s:name &6- Lists plugins containing the given name"
     configReload: "configreload [plugin] &b- Reloads a plugin's config file."
     search: "search <query> [page] &b- Search for plugin on Spigot plugin repository"
+    more: "more <id or name> &b- Shows informations about plugin from Spigot plugin repository"
 response:
   error:
     noCommand: "&cCommand %2$s not found. Try /%1$s for help!"
@@ -55,6 +56,17 @@ response:
         next: "&2--> use &6/%s search &9%s &c&l%d &2to see next page" # First %s -> command label, second %s -> query, %d -> next page number
       more: "&2^^^ use &6/%s more &c&l[plugin ID] &2to see details about plugin" # %s -> command label
       definitions: "%s &2-> Paid plugin; %s &2-> External download" # First %s -> paid sign, second %s -> external sign
+      footer: "&2|------------------ &6&lPluginController &2------------------|"
+    more:
+      header: "&2|------------------ &7#%d &6&l%s &2------------------|"
+      versions: "&2* Tested versions: &9%s"
+      premium: "&6This plugin is premium. Price: &9%f %s"
+      contributors: "&2* Contributors: &9%s"
+      tag: "&2* Tag: &9%s"
+      likesRating: "&2* Likes: &9%d &2* Rating: &9%f"
+      downloads: "&2* Downloads: &9%d"
+      url: "&2* Spigot URL: &9%s"
+      download: "&2^^^ use &6/%s download &c%d &2to download this plugin"
       footer: "&2|------------------ &6&lPluginController &2------------------|"
   details:
     name: "&bPlugin information: &a%s&b"
