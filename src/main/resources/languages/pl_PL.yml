@@ -1,0 +1,90 @@
+# %2$s is command string, %1$s is what command was sent. /%1$s %2$s - /plm command
+# %s is string input
+# Do not remove these, otherwise messages will not be displayed correctly.
+command:
+  description:
+    enable: "enable <plugin> &b- Włącza plugin"
+    disable: "disable <plugin> &b- Wyłącza plugin"
+    load: "load <plugin> &b- Ładuje plugin z pliku (trzeba podać nazwę pliku, może być bez .jar)"
+    unload: "unload <plugin> &b- Wyładowuje plugin z serwera"
+    reload: "reload <plugin> &b- Wyładowuje i ładuje plugin"
+    sreload: "sreload <plugin> &b- Wyłącza i włącza plugin"
+    details: "details <plugin> &b- Pokazuje informacje o pluginie"
+    list: "list [options] &b- Pokazuje pluginy z danymi opcjami"
+    listOptions: "&eOpcje listy\n&e-v &6- Pokazuje pluginy z wersjami\n&e-o &6- Pokazuje opcje listy\n&e-a &6- Pokazuje pluginy w kolejności alfabetycznej\n&e-s:name &6- Wyszukuje pluginy"
+    configReload: "configreload [plugin] &b- Przeładowuje plik konfiguracyjny pluginu"
+    search: "search <query> [page] &b- Wyszukuje pluginów w repozytorium Spigota"
+    more: "more <id or name> &b- Pokazuje informacje o pluginie z repozytorium Spigota"
+    download: "download <id or name> &b- Pobiera plugin z repozytorium Spigota"
+response:
+  error:
+    noCommand: "&cKomenda %2$s nie znaleziona. Użyj /%1$s aby uzyskać pomoc"
+    noPermission: "&cNie masz do tego uprawnień!"
+    noPlugin: "&cNie ma takiego pluginu: %s"
+    alreadyEnabled: "&c%s już jest włączony!"
+    alreadyDisabled: "&c%s już jest wyłączony"
+    noSuchFile: "&cNie ma takiego pliku: %s"
+    noDescriptionFile: "&cPlik jar nie posiada pliku plugin.yml: %s"
+    alreadyLoaded: "&c%s już jest załadowany!"
+    pluginNotLoaded: "&cNie udało się załadować %s! (Sprawdź konsolę po więcej informacji)"
+    failedOnLoad: "Nie udało się wywłoać 'onLoad()' dla pluginu %s"
+    unloadError: "&cWystąpił błąd w trakcie wyładowywania %s!"
+    unloadFailed: "&cNie udało się wyładować %s! (Sprawdź konsolę po więcej informacji)"
+    noJar: "&cNie ma pliku jar dla pluginu %s"
+    noResults: "&cBrak rezultatów dla &9%s"
+    download:
+      premium: "&cTen plugin jest płatny. Cena: &9%f %s. &cMusisz kupić ten plugin z &9%s"
+      external: "&cTen plugin ma zewnętrzne pobieranie. Pobierz go manualnie z &9%s"
+  action:
+    updateAvailable: "Dostępna jest nowa wersja: %2$s.%3$s.%4$s %1$s. Obecna wersja: %5$s.%6$s.%7$s"
+    pluginEnabled: "&a%s włączony!"
+    pluginDisabled: "&a%s wyłączony!"
+    pluginLoaded: "&a%1$s %2$ załadowany!"
+    pluginUnloaded: "&a%1$s %2$s wyładowany pomyślnie!"
+    pluginReloaded: "&a%s przeładowany pomyślnie."
+    pluginSreloaded: "&a%1$s %2$s łagodnie przeładowany"
+    list:
+      enabled: "&aWłączone pluginy: %s"
+      disabled: "&cWyłączone pluginy: %s"
+    configReload: "&aPlik konfiguracyjny pluginu %s przeładowany pomyślnie."
+    search:
+      header: "&2|------------------ &6&lWyniki wyszukiwania dla &9%s &2------------------|"
+      entry:
+        main: "&2* &9#%d %s" # %d -> plugin id, %s -> plugin name
+        paid: "&6$$$"
+        external: "&7[&5E&7]"
+      page:
+        actual: "&2|------------------ &6&lStrona &9%d &2------------------|" # %d -> page number
+        previous: "&2<-- użyj &6/%s search &9%s &c&l%d &2aby zobaczyć poprzednią stronę" # First %s -> command label, second %s -> query, %d -> previous page number
+        next: "&2--> użyj &6/%s search &9%s &c&l%d &2aby zobaczyć następną stronę" # First %s -> command label, second %s -> query, %d -> next page number
+      more: "&2^^^ użyj &6/%s more &c&l[plugin ID] &2aby zobaczyć więcej informacji o pluginie" # %s -> command label
+      definitions: "%s &2-> Plugin płatny; %s &2-> Zewnętrzne pobieranie" # First %s -> paid sign, second %s -> external sign
+      footer: "&2|------------------ &6&lPluginController &2------------------|"
+    more:
+      header: "&2|------------------ &7#%d &6&l%s &2------------------|"
+      versions: "&2* Testowane wersje: &9%s"
+      premium: "&6Ten plugin jest płatny. Cena: &9%f %s"
+      contributors: "&2* Twórcy: &9%s"
+      tag: "&2* Tag: &9%s"
+      likesRating: "&2* Polubienia: &9%d &2* Ocena: &9%f"
+      downloads: "&2* Pobrania: &9%d"
+      url: "&2* Adres URL na Spigocie: &9%s"
+      download: "&2^^^ użyj &6/%s download &c%d &2aby pobrać ten plugin"
+      footer: "&2|------------------ &6&lPluginController &2------------------|"
+    download:
+      downloading: "&2Pobieranie pluginu &9%s&2..."
+      downloaded: "&9%s &2został zapisany jako &6%s"
+  details:
+    name: "&bInformacje o pluginie: &a%s&b"
+    status:
+      main: "&6Status: %s"
+      enabled: "&aWłączony"
+      disabled: "&cWyłączony"
+    description: "&bOpis: &a%s"
+    version: "&bWersja: &a%s"
+    main: "&bGłowna klasa: &a%s"
+    file: "&bPlik jar: &a%s"
+    author:
+      single: "&bAutor: &a%s"
+      multiple: "&bAutorzy: &a%s"
+    website: "&bStrona internetowa: &a%s"
