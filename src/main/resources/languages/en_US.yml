@@ -15,6 +15,7 @@ command:
     configReload: "configreload [plugin] &b- Reloads a plugin's config file."
     search: "search <query> [page] &b- Search for plugin on Spigot plugin repository"
     more: "more <id or name> &b- Shows informations about plugin from Spigot plugin repository"
+    download: "download <id or name> &b- Downloads plugin from Spigot plugin repository"
 response:
   error:
     noCommand: "&cCommand %2$s not found. Try /%1$s for help!"
@@ -31,6 +32,10 @@ response:
     unloadFailed: "&cFailed to unload %s! (Check console for details.)"
     noJar: "&c%s's jar file is missing!"
     noResults: "&cNo results for &9%s"
+    download:
+      premium: "&cSorry, but this plugin is premium. Price: &9%f %s. &cYou have to buy this plugin
+      from &9%s"
+      external: "&cSorry, but this plugin has external download. Download it manually from &9%s"
   action:
     updateAvailable: "There is a new %1$s build %2$s.%3$s.%4$s available for PluginController.
     Current version: %5$s.%6$s.%7$s"
@@ -68,6 +73,9 @@ response:
       url: "&2* Spigot URL: &9%s"
       download: "&2^^^ use &6/%s download &c%d &2to download this plugin"
       footer: "&2|------------------ &6&lPluginController &2------------------|"
+    download:
+      downloading: "&2Downloading plugin &9%s&2..."
+      downloaded: "&9%s &2has been saved as &6%s"
   details:
     name: "&bPlugin information: &a%s&b"
     status:

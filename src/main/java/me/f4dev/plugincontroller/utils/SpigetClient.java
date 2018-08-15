@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SpigetClient {
-  private static final String spigetURL = "https://api.spiget.org/v2/";
+  public static final String spigetURL = "https://api.spiget.org/v2/";
   
   public class ListItem {
     public int id;
@@ -151,7 +151,7 @@ public class SpigetClient {
   }
   
   public static boolean download(String urlString, String dest) {
-    try {
+   try {
       int responseCode;
       do {
         URL url = new URL(urlString);
@@ -174,13 +174,15 @@ public class SpigetClient {
       
       URL download = new URL(urlString);
       Path path = FileSystems.getDefault().getPath(dest);
+      
       try(InputStream in = download.openStream()) {
         Files.copy(in, path, StandardCopyOption.REPLACE_EXISTING);
       }
     } catch(IOException e) {
       return false;
     }
-    return false;
+    
+    return true;
   }
   
   private static String getJson(String urlString) throws IOException {

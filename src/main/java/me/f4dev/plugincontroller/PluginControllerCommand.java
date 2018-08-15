@@ -31,7 +31,7 @@ public class PluginControllerCommand implements CommandExecutor {
     if(args.length == 0 || (args.length == 1 && (args[0].equals("help") || args[0].equals("h")))) {
       if(sender.hasPermission("plugincontroller.help")) {
         String[] subcommands = {"enable", "disable", "load", "unload", "reload", "sreload",
-                "details", "list", "configReload", "search", "more"};
+                "details", "list", "configReload", "search", "more", "download"};
   
         sender.sendMessage(PluginController.colorify("&2|------------------ &6&lPluginController " +
                 "Help &2------------------|"));
@@ -88,6 +88,8 @@ public class PluginControllerCommand implements CommandExecutor {
         return searchSubcommand(sender, label, args);
       case "more":
         return moreSubcommand(sender, label, args);
+      case "download":
+        return downloadSubcommand(sender, label, args);
     }
     
     return true;
@@ -662,6 +664,77 @@ public class PluginControllerCommand implements CommandExecutor {
     } else {
       sender.sendMessage(PluginController.colorify(plugin.language.getString("response.error" +
               ".noPermission")));
+    }
+    
+    return true;
+  }
+  
+  private boolean downloadSubcommand(CommandSender sender, String label, String[] args) {
+    if(sender.hasPermission("plugincontroller.download")) {
+      if(args.length < 2) {
+        sender.sendMessage(PluginController.colorify("&7/&6" + label + " " + plugin.language.getString(
+                "command.description.download")));
+        return true;
+      }
+  
+      int pluginId;
+  
+      try {
+        pluginId = Integer.parseInt(args[1]);
+      } catch(NumberFormatException e) {
+        ArrayList<SpigetClient.ListItem> searchPlugin = SpigetClient.search(args[1], 1, 1);
+    
+        if(searchPlugin != null) {
+          pluginId = searchPlugin.get(0).id;
+        } else {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.error.noResults"), args[1])));
+          return true;
+        }
+      }
+      SpigetClient.ListItem spigetPlugin = SpigetClient.get(pluginId);
+      
+      if(spigetPlugin != null) {
+        if(spigetPlugin.premium) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.error.download.premium"), spigetPlugin.price, spigetPlugin.currency,
+                  "https://spigotmc.org/resources/" + spigetPlugin.id)));
+          return true;
+        }
+        if(spigetPlugin.external) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.error.download.external"),
+                  "https://spigotmc.org/" + spigetPlugin.file.url)));
+          return true;
+        }
+        
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.action.download.downloading"), spigetPlugin.name)));
+        
+        if(SpigetClient.download(SpigetClient.spigetURL + "resources/" + spigetPlugin.id +
+                        "/download", "plugins/" + spigetPlugin.name + ".jar")) {
+          sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                  "response.action.download.downloaded"), spigetPlugin.name,
+                  spigetPlugin.name + ".jar")));
+          
+          File pluginFile = new File("plugins" + File.separator + spigetPlugin.name + ".jar");
+          
+          Plugin pluginInstance;
+          if((pluginInstance = plugin.controller.loadPlugin(pluginFile)) != null) {
+            plugin.controller.enablePlugin(pluginInstance);
+            sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                    "response.action.pluginLoaded"), pluginInstance.getName(),
+                    pluginInstance.getDescription().getVersion())));
+          } else {
+            sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                    "response.error.pluginNotLoaded"), spigetPlugin.name)));
+          }
+        }
+      } else {
+        sender.sendMessage(PluginController.colorify(String.format(plugin.language.getString(
+                "response.error.noResults"), args[1])));
+        return true;
+      }
     }
     
     return true;
