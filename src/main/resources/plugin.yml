@@ -45,3 +45,12 @@ permissions:
   plugincontroller.configReload:
     description: Allows you to reload configurations of plugins
     default: op
+  plugincontroller.search:
+    description: Allows you to search for plugins in Spigot plugins repository
+    default: op
+  plugincontroller.more:
+    description: Allows you to show information about plugins plugins from Spigot repository
+    default: op
+  plugincontroller.download:
+    description: Allows you to download plugins from Spigot repository
+    default: op
