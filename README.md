@@ -5,6 +5,9 @@
 This plugin is rewrite of [Plugin Manager Reloaded](https://www.spigotmc.org/resources/plugin-manager-reloaded.7144/)
 with new features - downloading plugins from Spigot. Made by [F4 Developer](http://f4dev.me).
 
+## Found a bug?
+[Report it here](https://github.com/kovansky/PluginController/issues/new?template=bug_report.md)
+
 ## Changelog
 ### 1.0.0-BETA
 #### First beta release
