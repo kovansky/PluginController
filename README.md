@@ -1,3 +1,36 @@
 # Plugin Controller
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Version: 1.0.0-BETA](https://img.shields.io/badge/Version-1.0.0--BETA-brightgreen.svg)](https://gitlab.com/kovansky/PluginController)
+
+## Changelog
+
+### 1.0.0-BETA
+#### First beta release
+Everything is new :smiley: 
+
+##### Commands
+- Create /plugincommander command [/pc, /plc]
+  - /plugincontroller enable,e - enables plugin
+  - /plugincontroller disable,d - disables plugin
+  - /plugincontroller load,l - loads plugin from file
+  - /plugincontroller unload,u - unloads plugin from server
+  - /plugincontroller reload,r,rl - unloads and loads plugin
+  - /plugincontroller sreload,softreload,sr,srl - disables and enables plugin
+  - /plugincontroller details,show,info,i - informations about loaded plugin
+  - /plugincontroller list,ls - lists enabled and disabled plugins
+  - /plugincontroller configreload,cr - reloads config of plugin
+  - /plugincontroller search - search for plugins on Spigot plugins repository
+  - /plugincontroller more - displays information about plugin from Spigot repository
+  - /plugincontroller download - downloads plugin from Spigot repository
+##### Listeners
+- Create CommandPreprocessListener
+- Create JoinNotifyListener - notify about updates on player join
+##### Tab Completer
+- Create PluginControllerTabCompleter
+##### Utils
+- Create Controller class - to manage plugins (disable, enable, unload, load etc)
+- Create PluginListManager class - to manage disabled plugins in list.yml file
+- Create SelfUpdateChecker class - check for updates when server starts
+- Create SpigetClient class - to connect with Spiget.org API
+##### Others
+- On reload disable plugins disabled earlier
