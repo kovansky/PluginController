@@ -74,7 +74,7 @@ public final class PluginController extends JavaPlugin {
   @Override
   public void onDisable() {
     language = null;
-    getLogger().info("Plugin Controller has been disabled");
+    getLogger().info("Plugin Controller has been disabled.");
   }
   
   private void initConfig() {
