@@ -1,0 +1,20 @@
+language: java
+jdk:
+  - oraclejdk8
+script: mvn clean verify
+branches:
+  only:
+  - master
+  except:
+  - "/^untagged-(.*)$/"
+deploy:
+  provider: releases
+  api_key:
+    secure:
+      secure: "20d94afeb3c42f40ef7ca7ddddcb711f57411734"
+  file: "/home/travis/build/kovansky/PluginController/target/PluginController-*.jar"
+  skip_cleanup: false
+  on:
+    repo: kovansky/PluginController
+    branch: master
+    tags: true

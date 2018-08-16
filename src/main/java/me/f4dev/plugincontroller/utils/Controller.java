@@ -28,13 +28,23 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 
 public class Controller {
-  
   PluginController plugin;
   
+  /**
+   * Class constructor
+   *
+   * @param plugin PluginController instance
+   */
   public Controller(PluginController plugin) {
     this.plugin = plugin;
   }
   
+  /**
+   * Get .jar file of given plugin
+   *
+   * @param javaPlugin JavaPlugin instance
+   * @return File of given JavaPlugin
+   */
   public File getFile(final JavaPlugin javaPlugin) {
     Field file;
     
@@ -49,6 +59,12 @@ public class Controller {
     return null;
   }
   
+  /**
+   * Returns description of plugin from plugin.yml
+   *
+   * @param file plugin .jar file
+   * @return plugin description
+   */
   public PluginDescriptionFile getDescription(final File file) {
     try {
       final JarFile jar = new JarFile(file);
@@ -66,22 +82,38 @@ public class Controller {
     return null;
   }
   
+  /**
+   * Enables given plugin
+   *
+   * @param pluginInstance plugin to enable
+   */
   public void enablePlugin(final Plugin pluginInstance) {
     Bukkit.getPluginManager().enablePlugin(pluginInstance);
     plugin.pluginListManager.removePlugin(pluginInstance.getName());
   }
   
+  /**
+   * Disables given plugin
+   *
+   * @param pluginInstance plugin to disable
+   */
   public void disablePlugin(final Plugin pluginInstance) {
     Bukkit.getPluginManager().disablePlugin(pluginInstance);
     plugin.pluginListManager.addPlugin(pluginInstance.getName());
   }
   
+  /**
+   * Loads plugin from given file
+   *
+   * @param pluginFile file from plugin should be loaded
+   * @return loaded plugin instance
+   */
   public Plugin loadPlugin(final File pluginFile) {
     Plugin pluginInstance;
-  
+    
     if(!pluginFile.exists()) {
       File unloadedFile = new File(pluginFile.getPath() + ".unloaded");
-  
+      
       if(unloadedFile.exists()) {
         unloadedFile.renameTo(pluginFile);
       } else {
@@ -99,7 +131,7 @@ public class Controller {
                 ".failedOnLoad"), plugin.getName()));
         e.printStackTrace();
       }
-  
+      
       enablePlugin(pluginInstance);
       return pluginInstance;
     } catch(InvalidPluginException | InvalidDescriptionException | UnknownDependencyException e) {
@@ -108,6 +140,12 @@ public class Controller {
     return null;
   }
   
+  /**
+   * Unloads given plugin
+   *
+   * @param pluginInstance plugin to unload
+   * @return true, if plugin file got renamed, otherwise false
+   */
   public boolean unloadPlugin(Plugin pluginInstance) {
     String plName = pluginInstance.getName();
     PluginManager pluginManager = Bukkit.getPluginManager();
@@ -200,7 +238,7 @@ public class Controller {
         }
       }
     }
-  
+    
     if(reload != null) {
       for(File pl : reload) {
         loadPlugin(pl);

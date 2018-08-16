@@ -13,6 +13,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class JoinNotifyListener implements Listener {
   PluginController plugin;
   
+  /**
+   * Class constructor
+   *
+   * @param plugin PluginController instance
+   */
   public JoinNotifyListener(PluginController plugin) {
     this.plugin = plugin;
     plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -27,7 +32,7 @@ public class JoinNotifyListener implements Listener {
     Player player = event.getPlayer();
     
     if(player.hasPermission("pluginmanager.notify") && plugin.updateMessage != null) {
-      player.sendMessage(PluginController.colorify(plugin.updateMessage));
+      player.sendMessage(PluginController.colorize(plugin.updateMessage));
     }
   }
 }

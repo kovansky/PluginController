@@ -18,6 +18,11 @@ import java.io.IOException;
 public class CommandPreprocessListener implements Listener {
   private PluginController plugin;
   
+  /**
+   * Class constructor
+   *
+   * @param plugin PluginController instance
+   */
   public CommandPreprocessListener(PluginController plugin) {
     this.plugin = plugin;
     plugin.getServer().getPluginManager().registerEvents(this, plugin);

@@ -14,11 +14,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class PluginListManager {
-  
   private PluginController plugin;
   private File list;
   private FileConfiguration fileConfiguration = null;
   
+  /**
+   * Class constructor
+   *
+   * @param plugin PluginController instance
+   */
   public PluginListManager(PluginController plugin) {
     this.plugin = plugin;
     this.list = new File(plugin.getDataFolder(), "list.yml");
@@ -26,10 +30,16 @@ public class PluginListManager {
     createFile();
   }
   
+  /**
+   * @return YamlConfiguration instance of list.yml file
+   */
   private YamlConfiguration getYamlConfiguration() {
     return YamlConfiguration.loadConfiguration(list);
   }
   
+  /**
+   * Creates list.yml file if not exists
+   */
   private void createFile() {
     if(!list.exists()) {
       try {
@@ -44,6 +54,9 @@ public class PluginListManager {
     }
   }
   
+  /**
+   * Saves list.yml file
+   */
   private void save() {
     try {
       fileConfiguration.save(list);
@@ -52,18 +65,28 @@ public class PluginListManager {
     }
   }
   
+  /**
+   * Removes given plugin from list
+   *
+   * @param pluginName name of plugin to remove
+   */
   public void removePlugin(String pluginName) {
     List<String> plugins = fileConfiguration.getStringList("disabled");
     
     if(plugins.contains(pluginName)) {
       plugins.remove(pluginName);
-  
+      
       fileConfiguration.set("disabled", plugins);
-  
+      
       save();
     }
   }
   
+  /**
+   * Adds given plugin to list
+   *
+   * @param pluginName name of plugin to add
+   */
   public void addPlugin(String pluginName) {
     List<String> plugins = fileConfiguration.getStringList("disabled");
     

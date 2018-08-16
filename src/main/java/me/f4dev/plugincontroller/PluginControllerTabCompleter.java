@@ -19,11 +19,22 @@ public class PluginControllerTabCompleter implements TabCompleter {
   private List<String> params = Arrays.asList("disable", "enable", "load", "unload", "reload",
           "sreload", "details", "configreload", "list");
   
+  /**
+   * Class constructor
+   *
+   * @param plugin PluginController instance
+   */
   public PluginControllerTabCompleter(PluginController plugin) {
     this.plugin = plugin;
     plugin.getCommand("plugincontroller").setTabCompleter(this);
   }
   
+  /**
+   * Checks if given string is parameter
+   *
+   * @param arg string to check
+   * @return true, if string is parameter, otherwise false
+   */
   private boolean checkParam(String arg) {
     for(String param : params) {
       if(arg.equalsIgnoreCase(param)) {
@@ -34,6 +45,13 @@ public class PluginControllerTabCompleter implements TabCompleter {
     return false;
   }
   
+  /**
+   * @param sender command sender
+   * @param cmd    command
+   * @param label  command label
+   * @param args   command arguments
+   * @return autocomplete options
+   */
   @Override
   public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
     List<String> list = new ArrayList<>();

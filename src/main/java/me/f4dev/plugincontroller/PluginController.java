@@ -30,20 +30,24 @@ public final class PluginController extends JavaPlugin {
   @Override
   public void onEnable() {
     initConfig();
-  
+    
+    // Utils
     pluginListManager = new PluginListManager(this);
     controller = new Controller(this);
     
+    // Commands, listeners & other related with game
     PluginControllerCommand pluginControllerCommand = new PluginControllerCommand(this);
     PluginControllerTabCompleter pluginControllerTabCompleter =
             new PluginControllerTabCompleter(this);
-  
+    
     JoinNotifyListener joinNotifyListener = new JoinNotifyListener(this);
     CommandPreprocessListener commandPreprocessListener = new CommandPreprocessListener(this);
-  
+    
+    // Update checker
     SelfUpdateChecker selfUpdateChecker = new SelfUpdateChecker(this);
     selfUpdateChecker.startUpdateCheck();
     
+    // Disable plugins disabled before reload
     File listFile = new File(getDataFolder(), "list.yml");
     if(listFile.exists()) {
       FileConfiguration disabledPlugins = YamlConfiguration.loadConfiguration(listFile);
@@ -60,7 +64,7 @@ public final class PluginController extends JavaPlugin {
       } else {
         disabledPlugins.set("disabled", null);
       }
-  
+      
       try {
         disabledPlugins.save(listFile);
       } catch(IOException e) {
@@ -77,6 +81,9 @@ public final class PluginController extends JavaPlugin {
     getLogger().info("Plugin Controller has been disabled.");
   }
   
+  /**
+   * Copies resources
+   */
   private void initConfig() {
     if(!new File(getDataFolder(), "config.yml").exists()) {
       saveResource("config.yml", false);
@@ -93,7 +100,13 @@ public final class PluginController extends JavaPlugin {
             "languages", this.getConfig().getString("language") + ".yml"));
   }
   
-  public static String colorify(String string) {
+  /**
+   * Colorizes given string into Minecraft colors
+   *
+   * @param string string to colorize
+   * @return colorized string
+   */
+  public static String colorize(String string) {
     if(string != null) {
       return ChatColor.translateAlternateColorCodes('&', string);
     }

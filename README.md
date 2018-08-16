@@ -8,6 +8,9 @@ with new features - downloading plugins from Spigot. Made by [F4 Developer](http
 ## Found a bug?
 [Report it here](https://github.com/kovansky/PluginController/issues/new?template=bug_report.md)
 
+## Help to translate
+Want to help with translation? Go [here](https://www.transifex.com/f4-developer/plugincontroller/)
+
 ## Changelog
 
 ### 1.0.1-BETA

@@ -15,13 +15,21 @@ import java.util.logging.Logger;
 public class SelfUpdateChecker {
   private PluginController plugin;
   private String currentVersion;
-  private String readUrl = "https://gitlab.com/kovansky/PluginController/raw/develop/version.txt";
+  private String readUrl = "https://raw.githubusercontent.com/kovansky/PluginController/master/version.txt";
   
+  /**
+   * Class constructor
+   *
+   * @param plugin PluginController instance
+   */
   public SelfUpdateChecker(PluginController plugin) {
     this.plugin = plugin;
     currentVersion = plugin.getDescription().getVersion();
   }
   
+  /**
+   * Checks if plugin has new version
+   */
   public void startUpdateCheck() {
     if(plugin.getConfig().getBoolean("updater.startCheck")) {
       Logger logger = plugin.getLogger();
@@ -38,36 +46,36 @@ public class SelfUpdateChecker {
           
           int uMajor = Integer.parseInt(split[0]);
           int uMinor = Integer.parseInt(split[1]);
-          int uRev;
+          int uPatch;
           
           String uChannel = "stable";
           
           if(split[2].contains("-")) {
-            String uRevSplit[] = split[2].split("-");
-            uChannel = uRevSplit[1];
-            uRev = Integer.parseInt(uRevSplit[0]);
+            String uPatchSplit[] = split[2].split("-");
+            uChannel = uPatchSplit[1];
+            uPatch = Integer.parseInt(uPatchSplit[0]);
           } else {
-            uRev = Integer.parseInt(split[2]);
+            uPatch = Integer.parseInt(split[2]);
           }
-  
+          
           int cMajor = Integer.parseInt(cVersion[0]);
           int cMinor = Integer.parseInt(cVersion[1]);
-          int cRev;
+          int cPatch;
           
           if(cVersion[2].contains("-")) {
-            String[] cRevSplit = cVersion[2].split("-");
-            cRev = Integer.parseInt(cRevSplit[0]);
+            String[] cPatchSplit = cVersion[2].split("-");
+            cPatch = Integer.parseInt(cPatchSplit[0]);
           } else {
-            cRev = Integer.parseInt(cVersion[2]);
+            cPatch = Integer.parseInt(cVersion[2]);
           }
           
           if(plugin.getConfig().getString("updater.channel").equalsIgnoreCase(uChannel)) {
-            if(updateAvailable(uMajor, uMinor, uRev, cMajor, cMinor, cRev)) {
+            if(updateAvailable(uMajor, uMinor, uPatch, cMajor, cMinor, cPatch)) {
               logger.info(String.format(plugin.language.getString("response.action" +
-                      ".updateAvailable"), uChannel, uMajor, uMinor, uRev, cMajor, cMinor, cRev));
+                      ".updateAvailable"), uChannel, uMajor, uMinor, uPatch, cMajor, cMinor, cPatch));
               plugin.updateMessage = String.format("&a" + plugin.language.getString("response.action" +
-                      ".updateAvailable"), "&c" + uChannel + "&a", "&6" + uMajor, uMinor, uRev +
-                      "&a", "&6" + cMajor, cMinor, cRev + "&a");
+                      ".updateAvailable"), "&c" + uChannel + "&a", "&6" + uMajor, uMinor, uPatch +
+                      "&a", "&6" + cMajor, cMinor, cPatch + "&a");
             } else {
               logger.info("No updates.");
             }
@@ -83,8 +91,19 @@ public class SelfUpdateChecker {
     }
   }
   
-  private boolean updateAvailable(int uMajor, int uMinor, int uRev, int cMajor, int cMinor,
-                                 int cRev) {
-    return uMajor > cMajor || uMinor > cMinor || uRev > cRev;
+  /**
+   * Checks if remote version is newer than local
+   *
+   * @param uMajor latest major version
+   * @param uMinor latest minor version
+   * @param uPatch latest patch
+   * @param cMajor local major version
+   * @param cMinor local minor version
+   * @param cPatch local patch
+   * @return true, if latest version is newer than local
+   */
+  private boolean updateAvailable(int uMajor, int uMinor, int uPatch, int cMajor, int cMinor,
+                                  int cPatch) {
+    return uMajor > cMajor || uMinor > cMinor || uPatch > cPatch;
   }
 }

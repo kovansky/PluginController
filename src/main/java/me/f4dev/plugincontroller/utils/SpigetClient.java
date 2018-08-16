@@ -23,6 +23,9 @@ import java.util.Arrays;
 public class SpigetClient {
   public static final String spigetURL = "https://api.spiget.org/v2/";
   
+  /**
+   * Spiget resource instance
+   */
   public class ListItem {
     public int id;
     public String name;
@@ -83,10 +86,23 @@ public class SpigetClient {
     public Review[] reviews;
   }
   
+  /**
+   * Lists Spigot resources
+   *
+   * @return <code>ListItem[]</code> of 20 Spigot resources
+   */
   public static ListItem[] listItems() {
     return listItems(20, 0);
   }
   
+  /**
+   * Lists Spigot resources
+   *
+   * @param size quantity of resources displayed on one page
+   * @param page page to display
+   * @return <code>ListItem[]</code> of <code>size</code> Spigot resources from <code>page</code>
+   * page
+   */
   public static ListItem[] listItems(int size, int page) {
     try {
       String json = getJson(spigetURL + "resources?page=" + page + "&size=" + size);
@@ -101,14 +117,40 @@ public class SpigetClient {
     return null;
   }
   
+  /**
+   * Searchs for resources with given query
+   *
+   * @param query string to search
+   * @return <code>ArrayList ListItem</code> of 10 Spigot resources matched by query
+   */
   public static ArrayList<ListItem> search(String query) {
     return search(query, 10, 0);
   }
   
+  /**
+   * Searchs for resources with given query
+   *
+   * @param query string to search
+   * @param size  quantity of resources displayed on one page
+   * @param page  page to display
+   * @return <code>ArrayList ListItem</code> of <code>size</code> Spigot resources matched by
+   * query from <code>page</code> page
+   */
   public static ArrayList<ListItem> search(String query, int size, int page) {
     return search(query, size, page, false);
   }
   
+  /**
+   * Searchs for resources with given query
+   *
+   * @param query    string to search
+   * @param size     quantity of resources displayed on one page
+   * @param page     page to display
+   * @param fullItem <code>true</code> to display plugins with all details, <code>false</code> for
+   *                 name, id and tag
+   * @return <code>ArrayList ListItem</code> of <code>size</code> Spigot resources matched by
+   * query from <code>page</code> page
+   */
   public static ArrayList<ListItem> search(String query, int size, int page, boolean fullItem) {
     try {
       String json = getJson(spigetURL + "search/resources/" + query + "?page=" + page + "&size=" + size);
@@ -118,7 +160,7 @@ public class SpigetClient {
         
         if(fullItem) {
           ArrayList<ListItem> fullList = new ArrayList<>();
-  
+          
           for(ListItem plugin : list) {
             ListItem fullPlugin = get(plugin.id);
             fullList.add(fullPlugin);
@@ -136,6 +178,10 @@ public class SpigetClient {
     return null;
   }
   
+  /**
+   * @param id id of Spigot resource
+   * @return <code>ListItem</code> of Spigot resource
+   */
   public static ListItem get(int id) {
     try {
       String json = getJson(spigetURL + "resources/" + id);
@@ -150,12 +196,19 @@ public class SpigetClient {
     return null;
   }
   
+  /**
+   * Downloads file from <code>urlString</code> as <code>dest</code>
+   *
+   * @param urlString URL of file to download
+   * @param dest      destination where to save file
+   * @return true if file was downloaded successfully, otherwise false
+   */
   public static boolean download(String urlString, String dest) {
-   try {
+    try {
       int responseCode;
       do {
         URL url = new URL(urlString);
-    
+        
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setInstanceFollowRedirects(true);
         httpURLConnection.connect();
@@ -185,6 +238,11 @@ public class SpigetClient {
     return true;
   }
   
+  /**
+   * @param urlString URL of JSON file
+   * @return returns String with content of JSON file from <code>urlString</code>
+   * @throws IOException if connection with <code>urlString</code> could not be opened
+   */
   private static String getJson(String urlString) throws IOException {
     URL url = new URL(urlString);
     HttpURLConnection request = (HttpURLConnection) url.openConnection();
