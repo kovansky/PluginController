@@ -1,0 +1,92 @@
+# %2$s is command string, %1$s is what command was sent. /%1$s %2$s - /plm command
+# %s is string input
+# Do not remove these, otherwise messages will not be displayed correctly.
+command:
+  description:
+    enable: "enable <plugin> &b- Enables a plugin"
+    disable: "disable <plugin> &b- Disables a plugin"
+    load: "load <plugin> &b- Loads a plugin (Must use a file name, no .jar needed)"
+    unload: "unload <plugin> &b- Unloads a plugin"
+    reload: "reload <plugin> &b- Unloads and loads a plugin"
+    sreload: "sreload <plugin> &b- Disables and enables a plugin"
+    details: "details <plugin> &b- Shows detailed information about a plugin"
+    list: "list [options] &b- Lists plugins with specified options"
+    listOptions: "&eList options\n&e-v &6- Shows plugins with versions\n&e-o &6- Lists options\n&e-a &6- Lists plugins in alphabetical order\n&e-s:name &6- Lists plugins containing the given name"
+    configReload: "configreload [plugin] &b- Reloads a plugin's config file."
+    search: "search <query> [page] &b- Search for plugin on Spigot plugin repository"
+    more: "more <id or name> &b- Shows informations about plugin from Spigot plugin repository"
+    download: "download <id or name> &b- Downloads plugin from Spigot plugin repository"
+response:
+  error:
+    noCommand: "&cCommand %2$s not found. Try /%1$s for help!"
+    noPermission: "&cYou don't have permission to do that!"
+    noPlugin: "&cNo such plugin: %s"
+    alreadyEnabled: "&c%s is already enabled!"
+    alreadyDisabled: "&c%s is already disabled!"
+    noSuchFile: "&cNo such file: %s"
+    noDescriptionFile: "&cJar file doesn't contain a plugin.yml file: %s"
+    alreadyLoaded: "&c%s is already loaded!"
+    pluginNotLoaded: "&cFailed to load %s! (Check console for details.)"
+    failedOnLoad: "Failed to call 'onLoad()' for plugin '%s'"
+    unloadError: "&cAn error occurred while unloading %s!"
+    unloadFailed: "&cFailed to unload %s! (Check console for details.)"
+    noJar: "&c%s's jar file is missing!"
+    noResults: "&cNo results for &9%s"
+    download:
+      premium: "&cSorry, but this plugin is premium. Price: &9%f %s. &cYou have to buy this plugin
+      from &9%s"
+      external: "&cSorry, but this plugin has external download. Download it manually from &9%s"
+  action:
+    updateAvailable: "There is a new %1$s build %2$s.%3$s.%4$s available for PluginController.
+    Current version: %5$s.%6$s.%7$s"
+    pluginEnabled: "&a%s enabled!"
+    pluginDisabled: "&a%s disabled!"
+    pluginLoaded: "&a%1$s %2$s loaded!"
+    pluginUnloaded: "&a%1$s %2$s unloaded successfully."
+    pluginReloaded: "&a%s reloaded successfully."
+    pluginSreloaded: "&a%1$s %2$s soft-reloaded successfully."
+    list:
+      enabled: "&aEnabled plugins: %s"
+      disabled: "&cDisabled plugins: %s"
+    configReload: "&a%s's config reloaded successfully."
+    search:
+      header: "&2|------------------ &6&lSearch results for &9%s &2------------------|"
+      entry:
+        main: "&2* &9#%d %s" # %d -> plugin id, %s -> plugin name
+        paid: "&6$$$"
+        external: "&7[&5E&7]"
+      page:
+        actual: "&2|------------------ &6&lPage &9%d &2------------------|" # %d -> page number
+        previous: "&2<-- use &6/%s search &9%s &c&l%d &2to see previous page" # First %s -> command label, second %s -> query, %d -> previous page number
+        next: "&2--> use &6/%s search &9%s &c&l%d &2to see next page" # First %s -> command label, second %s -> query, %d -> next page number
+      more: "&2^^^ use &6/%s more &c&l[plugin ID] &2to see details about plugin" # %s -> command label
+      definitions: "%s &2-> Paid plugin; %s &2-> External download" # First %s -> paid sign, second %s -> external sign
+      footer: "&2|------------------ &6&lPluginController &2------------------|"
+    more:
+      header: "&2|------------------ &7#%d &6&l%s &2------------------|"
+      versions: "&2* Tested versions: &9%s"
+      premium: "&6This plugin is premium. Price: &9%f %s"
+      contributors: "&2* Contributors: &9%s"
+      tag: "&2* Tag: &9%s"
+      likesRating: "&2* Likes: &9%d &2* Rating: &9%f"
+      downloads: "&2* Downloads: &9%d"
+      url: "&2* Spigot URL: &9%s"
+      download: "&2^^^ use &6/%s download &c%d &2to download this plugin"
+      footer: "&2|------------------ &6&lPluginController &2------------------|"
+    download:
+      downloading: "&2Downloading plugin &9%s&2..."
+      downloaded: "&9%s &2has been saved as &6%s"
+  details:
+    name: "&bPlugin information: &a%s&b"
+    status:
+      main: "&6Status: %s"
+      enabled: "&aEnabled"
+      disabled: "&cDisabled"
+    description: "&bDescription: &a%s"
+    version: "&bVersion: &a%s"
+    main: "&bMain class: &a%s"
+    file: "&bJar file: &a%s"
+    author:
+      single: "&bAuthor: &a%s"
+      multiple: "&bAuthors: &a%s"
+    website: "&bWebsite: &a%s"

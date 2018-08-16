@@ -1,0 +1,56 @@
+name: PluginController
+version: ${project.version}
+main: me.f4dev.plugincontroller.PluginController
+prefix: PluginController
+authors: [f4dev]
+commands:
+  plugincontroller:
+    description: Main command
+    aliases: [pc, plc]
+    permissions: plugincontroller.help
+permissions:
+  plugincontroller.*:
+    description: Full access to plugin
+    default: op
+    children:
+      plugincontroller.help: true
+      plugincontroller.enable: true
+  plugincontroller.help:
+    description: Access to help subcommand
+    default: op
+  plugincontroller.enable:
+    description: Allows you to enable plugins
+    default: op
+  plugincontroller.disable:
+    description: Allows you to disable plugins
+    default: op
+  plugincontroller.load:
+    description: Allows you to load plugins
+    default: op
+  plugincontroller.unload:
+    description: Allows you to unload plugins
+    default: op
+  plugincontroller.reload:
+    description: Allows you to reload plugins
+    default: op
+  plugincontroller.softreload:
+    description: Allows you to soft reload plugins
+    default: op
+  plugincontroller.details:
+    description: Allows you to get details about plugins
+    default: op
+  plugincontroller.list:
+    description: Allows you to get list of plugins
+    default: op
+  plugincontroller.configReload:
+    description: Allows you to reload configurations of plugins
+    default: op
+  plugincontroller.search:
+    description: Allows you to search for plugins in Spigot plugins repository
+    default: op
+  plugincontroller.more:
+    description: Allows you to show information about plugins plugins from Spigot repository
+    default: op
+  plugincontroller.download:
+    description: Allows you to download plugins from Spigot repository
+    default: op
