@@ -4,3 +4,4 @@
 * [Installation](INSTALLATION.md)
 * [Commands](COMMANDS.md)
 * [Config](CONFIG.md)
+* [Help](HELP.md)
