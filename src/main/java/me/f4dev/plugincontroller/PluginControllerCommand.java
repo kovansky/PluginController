@@ -475,7 +475,7 @@ public class PluginControllerCommand implements CommandExecutor {
       
       if(!search.isEmpty()) {
         String finalSearch = search;
-        plugins.removeIf(pluginInstance -> !pluginInstance.getName().contains(finalSearch));
+        plugins.removeIf(pluginInstance -> !pluginInstance.getName().toLowerCase().contains(finalSearch.toLowerCase()));
       }
       
       if(alphabetical) {
@@ -498,11 +498,16 @@ public class PluginControllerCommand implements CommandExecutor {
         String pluginName = pluginInstance.getName();
         
         if(!search.isEmpty()) {
-          int index = pluginName.indexOf(search);
+          int index = pluginName.toLowerCase().indexOf(search.toLowerCase());
           
-          pluginName =
-                  pluginName.substring(0, index) + "&5" + search + "&9&l" + pluginName.substring
-                          (index + search.length());
+          if(index != 0) {
+            pluginName =
+                    pluginName.substring(0, index) + "&5" + pluginName.substring(index,
+                            index + search.length()) + "&9&l" + pluginName.substring(index + search.length());
+          } else {
+            pluginName =
+                    "&5" + pluginName.substring(index, index + search.length()) + "&9&l" + pluginName.substring(index + search.length());
+          }
         }
         
         String entry = "&9&l" + pluginName + (versions ?

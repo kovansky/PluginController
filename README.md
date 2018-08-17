@@ -1,8 +1,28 @@
 # Plugin Controller
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Version: 1.0.1-BETA](https://img.shields.io/badge/Version-1.0.1--BETA-brightgreen.svg)](https://gitlab.com/kovansky/PluginController) [![Build Status](https://travis-ci.org/kovansky/PluginController.svg?branch=master)](https://travis-ci.org/kovansky/PluginController)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)](https://gitlab.com/kovansky/PluginController)
+[![Spigot versions: 1.7.2-1.13](https://img.shields.io/badge/Spigot-1.7.2--1.13-green.svg)](https://gitlab.com/kovansky/PluginController)
+[![Build Status](https://travis-ci.org/kovansky/PluginController.svg?branch=master)](https://travis-ci.org/kovansky/PluginController)
 
 This plugin is rewrite of [Plugin Manager Reloaded](https://www.spigotmc.org/resources/plugin-manager-reloaded.7144/) with new features - downloading plugins from Spigot. Made by [F4 Developer](http://f4dev.me).
+
+## Tested Spigot versions
+
+- 1.13
+- 1.12.2
+- 1.12.1
+- 1.12
+- 1.11.2
+- 1.11.1
+- 1.11
+- 1.10.2
+- 1.10
+- 1.9
+- 1.8.8
+- 1.8
+- 1.7.9
+- 1.7.2
 
 ## Found a bug?
 
@@ -13,6 +33,15 @@ This plugin is rewrite of [Plugin Manager Reloaded](https://www.spigotmc.org/res
 Want to help with translation? Go [here](https://www.transifex.com/f4-developer/plugincontroller/)
 
 ## Changelog
+
+### 1.0.0
+First stable release :smiley:
+
+**Docs**
+* Created docs files
+
+**plugin.yml**
+* Added permissions to plugin.yml file
 
 ### 1.0.1-BETA
 

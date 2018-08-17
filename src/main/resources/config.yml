@@ -2,4 +2,4 @@ updater:
   startCheck: true  # Check for updateMessage in selected channel on startup.
   notify: true # Notify anyone with permission on joining that there is an updateMessage available.
   channel: stable # Allowed values are stable/beta/snapshot; Used to check for updates in each channel.
-language: en_US # Short locale code. Files found in /plugins/PluginManager/localization folder.
+language: en_US # Short locale code. Files found in /plugins/PluginController/localization folder.

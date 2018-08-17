@@ -15,6 +15,18 @@ permissions:
     children:
       plugincontroller.help: true
       plugincontroller.enable: true
+      plugincontroller.disable: true
+      plugincontroller.load: true
+      plugincontroller.unload: true
+      plugincontroller.reload: true
+      plugincontroller.softreload: true
+      plugincontroller.details: true
+      plugincontroller.list: true
+      plugincontroller.configReload: true
+      plugincontroller.search: true
+      plugincontroller.more: true
+      plugincontroller.download: true
+      plugincontroller.notify: true
   plugincontroller.help:
     description: Access to help subcommand
     default: op
@@ -53,4 +65,7 @@ permissions:
     default: op
   plugincontroller.download:
     description: Allows you to download plugins from Spigot repository
+    default: op
+  pluginmanager.notify:
+    description: Notifies about updates
     default: op
