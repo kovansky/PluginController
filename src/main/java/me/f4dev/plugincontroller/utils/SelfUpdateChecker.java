@@ -5,8 +5,10 @@
 package me.f4dev.plugincontroller.utils;
 
 import me.f4dev.plugincontroller.PluginController;
+import org.bukkit.plugin.Plugin;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -77,6 +79,29 @@ public class SelfUpdateChecker implements  Runnable {
               plugin.updateMessage = String.format("&a" + plugin.language.getString("response.action" +
                       ".updateAvailable"), "&c" + uChannel + "&a", "&6" + uMajor, uMinor, uPatch +
                       "&a", "&6" + cMajor, cMinor, cPatch + "&a");
+              
+              // Download update
+              if(plugin.getConfig().getBoolean("updater.download")) {
+                String downloadUrl = "https://github.com/kovansky/PluginController/releases" +
+                        "/download/v" + str + "/PluginController-" + str + ".jar";
+  
+                logger.info(PluginController.colorize(String.format(plugin.language.getString(
+                        "response.action.download.downloading"), "PluginController")));
+  
+                String downloadName = "PluginController";
+  
+                if(SpigetClient.download(downloadUrl, "plugins/" + downloadName + ".jar")) {
+                  logger.info(PluginController.colorize(String.format(plugin.language.getString(
+                          "response.action.download.downloaded"), downloadName,
+                          downloadName + ".jar")));
+                  
+                  logger.info(PluginController.colorize(plugin.language.getString("response" +
+                          ".action.reloadNeeded")));
+                } else {
+                  logger.info(PluginController.colorize(plugin.language.getString("response.error" +
+                          ".download.error")));
+                }
+              }
             } else {
               logger.info("No updates.");
             }

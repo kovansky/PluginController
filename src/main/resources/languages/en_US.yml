@@ -40,6 +40,7 @@ response:
   action:
     updateAvailable: "There is a new %1$s build %2$s.%3$s.%4$s available for PluginController.
     Current version: %5$s.%6$s.%7$s"
+    reloadNeeded: "&cReload is needed after update. &lServer will reload."
     pluginEnabled: "&a%s enabled!"
     pluginDisabled: "&a%s disabled!"
     pluginLoaded: "&a%1$s %2$s loaded!"
