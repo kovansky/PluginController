@@ -17,7 +17,8 @@ import java.util.logging.Logger;
 public class SelfUpdateChecker implements  Runnable {
   private PluginController plugin;
   private String currentVersion;
-  private String readUrl = "https://raw.githubusercontent.com/kovansky/PluginController/master/version.txt";
+  private String readUrl = "https://raw.githubusercontent" +
+          ".com/kovansky/PluginController/feature/plc-19/version.txt";
   
   /**
    * Class constructor
