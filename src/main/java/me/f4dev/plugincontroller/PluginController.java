@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.List;
 
 public final class PluginController extends JavaPlugin {
-  
   public FileConfiguration language;
   public PluginListManager pluginListManager;
   public Controller controller;
@@ -44,8 +43,8 @@ public final class PluginController extends JavaPlugin {
     CommandPreprocessListener commandPreprocessListener = new CommandPreprocessListener(this);
     
     // Update checker
-    SelfUpdateChecker selfUpdateChecker = new SelfUpdateChecker(this);
-    selfUpdateChecker.startUpdateCheck();
+    Thread selfUpdateChecker = new Thread(new SelfUpdateChecker(this));
+    selfUpdateChecker.start();
     
     // Disable plugins disabled before reload
     File listFile = new File(getDataFolder(), "list.yml");

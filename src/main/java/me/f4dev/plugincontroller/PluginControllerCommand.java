@@ -800,13 +800,15 @@ public class PluginControllerCommand implements CommandExecutor {
         sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
                 "response.action.download.downloading"), spigetPlugin.name)));
         
+        String downloadName = spigetPlugin.name.split(" ")[0];
+        
         if(SpigetClient.download(SpigetClient.spigetURL + "resources/" + spigetPlugin.id +
-                "/download", "plugins/" + spigetPlugin.name + ".jar")) {
+                        "/download", "plugins/" + downloadName + ".jar")) {
           sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
                   "response.action.download.downloaded"), spigetPlugin.name,
                   spigetPlugin.name + ".jar")));
           
-          File pluginFile = new File("plugins" + File.separator + spigetPlugin.name + ".jar");
+          File pluginFile = new File("plugins" + File.separator + downloadName + ".jar");
           
           Plugin pluginInstance;
           if((pluginInstance = plugin.controller.loadPlugin(pluginFile)) != null) {
@@ -818,6 +820,9 @@ public class PluginControllerCommand implements CommandExecutor {
             sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
                     "response.error.pluginNotLoaded"), spigetPlugin.name)));
           }
+        } else {
+          sender.sendMessage(PluginController.colorize(plugin.language.getString("response.error" +
+                  ".download.error")));
         }
       } else {
         sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
