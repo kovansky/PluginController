@@ -36,9 +36,11 @@ response:
       premium: "&cSorry, but this plugin is premium. Price: &9%f %s. &cYou have to buy this plugin
       from &9%s"
       external: "&cSorry, but this plugin has external download. Download it manually from &9%s"
+      error: "&cAn error ocurred"
   action:
     updateAvailable: "There is a new %1$s build %2$s.%3$s.%4$s available for PluginController.
     Current version: %5$s.%6$s.%7$s"
+    reloadNeeded: "&cReload is needed after update. &lServer will reload."
     pluginEnabled: "&a%s enabled!"
     pluginDisabled: "&a%s disabled!"
     pluginLoaded: "&a%1$s %2$s loaded!"

@@ -232,6 +232,7 @@ public class SpigetClient {
         Files.copy(in, path, StandardCopyOption.REPLACE_EXISTING);
       }
     } catch(IOException e) {
+      e.printStackTrace();
       return false;
     }
     

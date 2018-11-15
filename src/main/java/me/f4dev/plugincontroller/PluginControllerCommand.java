@@ -475,7 +475,7 @@ public class PluginControllerCommand implements CommandExecutor {
       
       if(!search.isEmpty()) {
         String finalSearch = search;
-        plugins.removeIf(pluginInstance -> !pluginInstance.getName().contains(finalSearch));
+        plugins.removeIf(pluginInstance -> !pluginInstance.getName().toLowerCase().contains(finalSearch.toLowerCase()));
       }
       
       if(alphabetical) {
@@ -498,11 +498,16 @@ public class PluginControllerCommand implements CommandExecutor {
         String pluginName = pluginInstance.getName();
         
         if(!search.isEmpty()) {
-          int index = pluginName.indexOf(search);
+          int index = pluginName.toLowerCase().indexOf(search.toLowerCase());
           
-          pluginName =
-                  pluginName.substring(0, index) + "&5" + search + "&9&l" + pluginName.substring
-                          (index + search.length());
+          if(index != 0) {
+            pluginName =
+                    pluginName.substring(0, index) + "&5" + pluginName.substring(index,
+                            index + search.length()) + "&9&l" + pluginName.substring(index + search.length());
+          } else {
+            pluginName =
+                    "&5" + pluginName.substring(index, index + search.length()) + "&9&l" + pluginName.substring(index + search.length());
+          }
         }
         
         String entry = "&9&l" + pluginName + (versions ?
@@ -795,13 +800,15 @@ public class PluginControllerCommand implements CommandExecutor {
         sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
                 "response.action.download.downloading"), spigetPlugin.name)));
         
+        String downloadName = spigetPlugin.name.split(" ")[0];
+        
         if(SpigetClient.download(SpigetClient.spigetURL + "resources/" + spigetPlugin.id +
-                "/download", "plugins/" + spigetPlugin.name + ".jar")) {
+                        "/download", "plugins/" + downloadName + ".jar")) {
           sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
                   "response.action.download.downloaded"), spigetPlugin.name,
                   spigetPlugin.name + ".jar")));
           
-          File pluginFile = new File("plugins" + File.separator + spigetPlugin.name + ".jar");
+          File pluginFile = new File("plugins" + File.separator + downloadName + ".jar");
           
           Plugin pluginInstance;
           if((pluginInstance = plugin.controller.loadPlugin(pluginFile)) != null) {
@@ -813,6 +820,9 @@ public class PluginControllerCommand implements CommandExecutor {
             sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
                     "response.error.pluginNotLoaded"), spigetPlugin.name)));
           }
+        } else {
+          sender.sendMessage(PluginController.colorize(plugin.language.getString("response.error" +
+                  ".download.error")));
         }
       } else {
         sender.sendMessage(PluginController.colorize(String.format(plugin.language.getString(
