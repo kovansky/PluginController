@@ -35,6 +35,7 @@ response:
     download:
       premium: "&cTen plugin jest płatny. Cena: &9%f %s. &cMusisz kupić ten plugin z &9%s"
       external: "&cTen plugin ma zewnętrzne pobieranie. Pobierz go manualnie z &9%s"
+      error: "&cWystąpił błąd"
   action:
     updateAvailable: "Dostępna jest nowa wersja: %2$s.%3$s.%4$s %1$s. Obecna wersja: %5$s.%6$s.%7$s"
     pluginEnabled: "&a%s włączony!"

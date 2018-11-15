@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.logging.Logger;
 
-public class SelfUpdateChecker {
+public class SelfUpdateChecker implements  Runnable {
   private PluginController plugin;
   private String currentVersion;
   private String readUrl = "https://raw.githubusercontent.com/kovansky/PluginController/master/version.txt";
@@ -30,7 +30,7 @@ public class SelfUpdateChecker {
   /**
    * Checks if plugin has new version
    */
-  public void startUpdateCheck() {
+  public void run() {
     if(plugin.getConfig().getBoolean("updater.startCheck")) {
       Logger logger = plugin.getLogger();
       
@@ -73,6 +73,7 @@ public class SelfUpdateChecker {
             if(updateAvailable(uMajor, uMinor, uPatch, cMajor, cMinor, cPatch)) {
               logger.info(String.format(plugin.language.getString("response.action" +
                       ".updateAvailable"), uChannel, uMajor, uMinor, uPatch, cMajor, cMinor, cPatch));
+              
               plugin.updateMessage = String.format("&a" + plugin.language.getString("response.action" +
                       ".updateAvailable"), "&c" + uChannel + "&a", "&6" + uMajor, uMinor, uPatch +
                       "&a", "&6" + cMajor, cMinor, cPatch + "&a");
